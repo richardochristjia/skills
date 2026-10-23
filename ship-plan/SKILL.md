@@ -1,0 +1,133 @@
+---
+name: ship-plan
+description: Takes an approved plan from implementation to an open pull request with nobody watching. Picks the depth of the run from the change's size, routes each step to a model, taste tests the build like a user against the repo's committed fixture, reviews it, has a falsifier argue against each finding, fixes what's proven in one round, opens the merge request, and reports back. Never merges. Use after approve-plan hands over a plan to finish unattended, or when the user says "ship this plan".
+argument-hint: "<absolute path to .plans/task> [micro|simple|phased]"
+---
+
+# Ship plan
+
+You run unattended: nobody answers questions. Never stop to ask. When something needs a decision, take the option closest to the plan's intent and keep going. If that changes something the user approved (what the feature does, its scope, an acceptance criterion, a Record entry), add a divergence note to `plan.md` saying what you did instead and why. Stop early only when an unrecoverable error blocks all progress; then go straight to **Report back**.
+
+**Arguments:** the plan folder as an absolute path, and the loop to run.
+
+**Never:** merge, force-push, push to the main line, or touch files outside the repo.
+
+## You orchestrate, helpers do the work
+
+Your context is for decisions, not file contents. Run every step below in a fresh subagent and keep only what it reports back. Use subagents in this checkout: helpers must work in the same worktree, and a separate session would get a different checkout.
+
+- **Each helper gets** the plan folder, the step's skill and arguments, the unattended rule above (never ask; note divergences in `plan.md` and risks in `risks.md`), and what to return: at most ten lines on what it did, what it changed, what failed, and what's left open.
+- **You read only** those reports, `tasks.md`, `tier.md`, and `git status`. Don't open source files, diffs or test logs yourself. If a report is unclear, send a helper to find out.
+- **One helper call per turn.** The harness takes one subagent call per turn; calls issued in a burst are rejected with "a subagent call is already in progress". Never issue two in one turn, and never retry a rejected call with a different model — issue the next helper on the next turn. If the harness offers a fan-out token, you may spend it to run several at once.
+- **Run a step once.** A step that reported is done: never run it again because its report was unclear. Read the report again first; if it is still unclear, send one more helper with a sharper question — not the same step again. If a helper fails, retry it once, with the same model and the same task; if it fails again, do the step yourself and say so in the report.
+- **After the context pack exists, you do not explore the repository.** No grep, no cat, no file read of the source tree. If the pack lacks something a step needs, send a helper to fetch it. Your own tool use is for the reports, the plan folder and git.
+- **One helper at a time,** since they share the worktree. The only exception is the review step's reviewers, which only read.
+- **A helper that has reported is done.** If it's still running (in the background, in a pane, in a session you started), stop it.
+- **Helpers may start their own helpers** when their skill says so, like interrogate's reviewers or the phased loop's per-phase agents.
+- **If you have no subagent tool,** run the step yourself.
+
+## The tier decides the steps
+
+Read `.plans/<task>/tier.md`. If it is missing, run the **pick-tier** skill in measure mode against the merge base of the branch and the default branch, and write the file.
+
+The tier is a decision, not a suggestion. Run the steps the tier lists, and no others. Never run a step the tier skipped; never add one the tier skipped without the user asking. A step may escalate the tier (see pick-tier); when it does, the new tier replaces the old one for the rest of the run.
+
+| Tier | Steps |
+|---|---|
+| **S** | Build (implement, unit test, lint, commit) → push and merge-request link → CI status |
+| **M** | Build (micro loop: one build, one test run) → context pack → one correctness review → falsify → fix, once → verify → push and merge-request link → CI status |
+| **L** | Build → context pack → review (interrogate, blast radius, the repo's own review skill) → falsify → fix, once → simplify and deslop → spec check → verify → **push and merge-request link** → browser walkthrough → CI status |
+
+The merge-request step comes before the optional checks on purpose: a run that hits a usage limit, a sleep or a crash must still leave a branch and a link behind. Anything an optional check finds afterwards is a new commit on the same branch, and it goes to the user.
+
+## Models
+
+Name the model when you spawn a helper.
+
+- **Opus** for the plan, for the fix step, and for any judgement about whether a finding is real.
+- **Sonnet** for everything else: build, context pack, review, falsify, simplify, spec check, verify, browser walkthrough, delivery, CI.
+
+In Claude Code that is the Agent tool's `model` parameter. In another harness it is whatever the equivalent is — a second session with that model, a CLI invocation with a model flag, a cheap-model profile. If the harness cannot pick a model per agent, use one model for the whole run and say so in the report.
+
+## Steps
+
+Each step names the model that runs it.
+
+1.  **Build.** A helper runs the chosen loop: `/<loop>-loop <plan folder>`. For the phased loop, the helper is that loop's orchestrator, so don't tell it to run solo. *Sonnet.*
+2.  **Context pack.** A helper runs the context-pack skill on the branch and writes `.plans/<task>/context-pack.md`. Every later helper reads that file instead of re-exploring the repository. *Sonnet.*
+3.  **Review.** One reviewer per turn, **correctness first**, then security, then structure, then tests.
+    - **Tier M:** the correctness reviewer only. The others run if it reports a critical finding, or if the user asked for them.
+    - **Tier L:** all four angles, one per turn, plus check-impact on the branch's diff, plus the repo's own review skill or agent if it has one. If the harness grants a fan-out token, run them at once and save the turns.
+    - Every reviewer reads the context pack first and cites it. It must back every finding with proof: a real run that shows it, or a test that fails now and would pass with the fix. Merge their reports and drop duplicates. The must-fix findings are interrogate's **Act on**, a blast-radius risk it confirmed, and a broken written rule of the repo.
+4.  **Falsify.** A helper runs falsify on the must-fix findings, with the plan folder and the branch's diff. No proof, no fix: an unproven finding is left open or dismissed. *Sonnet.*
+5.  **Fix, once.** One helper does what falsify ruled (cut, narrow, fix) and fixes the browser walkthrough's broke lines. Each fix comes with a test that fails without it, where a test can show it. A fix that needs a new rule or special case (a branch for one input, a new setting or flag) isn't made: it goes to **Needs your call**, since it often means the design is wrong. There is no second fix round. *Opus.*
+6.  **Simplify.** A helper runs the `simplify` skill if you have it, then deslop, on the branch's changes, then runs `test`. *Tier L only. Sonnet.*
+7.  **Spec check.** A helper runs gap-analysis on the plan folder, fixes every gap it lists, then runs `check` and `test` until both pass. *Tier L only. Sonnet.*
+8.  **Verify.** A helper runs `check` and `test` **once, at the end**, then lints and formats the files that changed, and fixes until everything passes. Do not run the suite after every phase, and do not run it a second time against another ref to count pre-existing failures — that is a whole extra run for no signal. Type check only when the repo's type-check command actually works: check that it exits cleanly first, and if it is broken, say so and skip it. *Sonnet.*
+9.  **Push and open the pull request.** A helper pushes the branch and opens the pull request with the description below, using the repo's own tooling if it has any. It returns the link. Then stop every helper still running. **Tier S, M and L.** *Sonnet.* See **The delivery step**.
+10. **Browser walkthrough.** A helper runs the taste-test skill against the plan folder, using the repo's committed fixture. Anything still broken goes to **Needs your call**; don't fix it. *Tier L only. Sonnet.*
+11. **CI status.** A helper reports the CI state of the branch. *Sonnet.*
+12. **Report back.** You do this one.
+
+## The delivery step
+
+**The default is GitHub.** `gh pr create` opens the pull request and `gh pr checks --watch` reports CI. When the remote turns out to be something else, detection overrides the default. The default keeps this skill generic: it works on a GitHub repo with no setup, and on any other forge once the platform is detected.
+
+Detect the platform before running any host-specific command:
+
+```sh
+git remote -v
+curl -s --max-time 5 https://<host>/api/v1/version   # Gitea and Forgejo answer {"version":"..."}
+ls .github/workflows .gitea/workflows .gitlab-ci.yml Jenkinsfile 2>/dev/null
+```
+
+- **GitHub** — the default, and the answer whenever nothing else matches: `gh pr create` with the description; CI with `gh pr checks --watch`.
+- **Gitea or Forgejo** (the version probe answers): the pull request is a *pull request*, not a merge request, and its link has the shape `<repo-url>/pulls/new/<branch>`.
+  - `tea` installed → `tea pr create`.
+  - no `tea`, but a token in the environment (`GITEA_TOKEN`, `TEA_TOKEN`, or a `gitea-token` file in the plan folder) → open it through the API: `POST <host>/api/v1/repos/<owner>/<repo>/pulls` with `head` (the branch), `base` (the default branch), `title` and `body` (the description).
+  - neither → push the branch and print the link for a human to open:
+    ```
+    <repo-url>/pulls/new/<branch>
+    ```
+    Say plainly that the human opens it.
+  - CI: Gitea Actions → `GET <host>/api/v1/repos/<owner>/<repo>/commits/<ref>/status` with the same token. Without a token the status is not readable: report "CI unknown".
+- **GitLab** (`.gitlab-ci.yml` present, or the host answers GitLab's API): `glab mr create` and `glab ci status` when `glab` is installed and authenticated; otherwise push the branch and print `<repo-url>/-/merge_requests/new?merge_request[source_branch]=<branch>`.
+- **Jenkins only** (`Jenkinsfile` at the root and no CI config above): push the branch, print the pull-request link, and report CI as "CI unknown — Jenkins runs on push". If the plan folder holds a `ci-url` file, the helper reads that URL's JSON API (with a token from the environment, if one is there) and reports the build status.
+
+**When the platform is not confirmed.** If detection is inconclusive and `gh` fails, push the branch and print the link for the platform that was detected; if nothing was detected, print the GitHub form:
+
+```
+<repo-url>/compare/<base>...<branch>
+```
+
+and say plainly that the platform was not confirmed, so the human opens the link by hand.
+
+Never install a tool and never create a credential. When a host cannot be automated, degrade to the link and say so.
+
+## Checkpointing
+
+After every step, append to `.plans/<task>/run-state.md`:
+
+```markdown
+## <step name>
+status: done | failed | skipped
+outcome: <one line>
+```
+
+On start, read that file and skip every step already marked `done`. A run that was interrupted — by a usage limit, a sleep, a crash — continues from the checkpoint instead of starting over. This is what makes a run survive the kind of death that left the traced run with no pull request.
+
+## The pull request description
+
+Short, so the user reads all of it. Put these at the top, before the repo's usual template:
+
+- **Summary:** what changed, at most 5 bullets.
+- **How it was tried:** what the browser walkthrough did and saw, in a few lines, with the pictures it produced, and the commands to try it yourself.
+- **Needs your call:** at most 5 items, worst first. Anything still broken after the walkthrough, checks it couldn't try, fixes held back because they need a new rule, divergences, and open findings worth a look. If there are more, say how many and that they're in the plan folder.
+
+Everything else stays in the plan folder: every divergence note, open and dismissed finding, and the risk list.
+
+## Report back
+
+One line: `<plan name>: pull request <link>. CI <green|red|unknown>. <N> need your call.` (or what stopped you, if you stopped early).
+
+End your final message with that line. It is the only thing the user needs to read; the findings, the risks and the divergences stay in the plan folder.
