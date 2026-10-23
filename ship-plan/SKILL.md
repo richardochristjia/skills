@@ -33,7 +33,7 @@ Read `.plans/<task>/tier.md`. If it is missing, run the **pick-tier** skill in m
 Read `LOOP:` from `tier.md` too.
 
 - If the argument differs from `LOOP:` and the line has no `(user)` mark, run the `tier.md` loop and add a divergence note to `plan.md`.
-- If `tier.md` has no `LOOP:` line (an older plan), run `tier.mjs` in measure mode with `--phases` counted from `tasks.md` (`##` headers, leaving out `Verification` and `Manual checks`), and write the line.
+- If `tier.md` has no `LOOP:` line (an older plan), run `tier.mjs` in measure mode with `--phases` counted from `tasks.md` (`##` headers, leaving out `Verification` and `Manual checks`), plus `--tier <X>` if the `why:` signal says the tier was declared by the user, and write the line.
 - If the tier is raised mid-run, the loop already chosen stays: a finished build is not re-run.
 
 The tier is a decision, not a suggestion. Run the steps the tier lists, and no others. Never run a step the tier skipped; never add one the tier skipped without the user asking. A step may escalate the tier (see pick-tier); when it does, the new tier replaces the old one for the rest of the run.

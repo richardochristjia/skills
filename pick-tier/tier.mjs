@@ -5,11 +5,14 @@
 //   node tier.mjs --files a.vue,b.ts              estimate from a file list
 //   node tier.mjs --base origin/master --out .plans/task/tier.md
 //   node tier.mjs --files a.vue,b.ts --phases 4   count tasks.md phases for the loop
+//   node tier.mjs --files a.vue,b.ts --tier L     keep a user-declared tier
 //
-// The LOOP: line is a fixed rule: tier S or M -> micro; tier L with a
-// sensitive path or more than 3 phases -> phased; every other tier L -> simple.
-// Prints the tier.md content. pick-tier adds judgement on top: a
-// user-declared tier, and escalation when a step finds more than it measured.
+// --tier is a user-declared tier: the result is the higher of it and the
+// computed tier, so a declared tier is never lowered.
+// The LOOP: line is a fixed rule on the final tier: tier S or M -> micro; tier
+// L with a sensitive path or more than 3 phases -> phased; every other tier L
+// -> simple. Prints the tier.md content. pick-tier adds judgement on top:
+// escalation when a step finds more than it measured.
 import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -29,9 +32,17 @@ if (phasesArg !== null && !Number.isInteger(phases)) {
   console.error("--phases takes a whole number");
   process.exit(2);
 }
+const USAGE =
+  "usage: tier.mjs --base <ref> [--end <ref>] | --files <a,b,c> [--phases <n>] [--tier <S|M|L>] [--out <file>]";
+const declared = opt("--tier");
+if (args.includes("--tier") && !["S", "M", "L"].includes(declared)) {
+  console.error("--tier takes S, M or L");
+  console.error(USAGE);
+  process.exit(2);
+}
 
 if (!base && !filesArg) {
-  console.error("usage: tier.mjs --base <ref> [--end <ref>] | --files <a,b,c> [--phases <n>] [--out <file>]");
+  console.error(USAGE);
   process.exit(2);
 }
 
@@ -172,6 +183,12 @@ if (docOnly) {
       : perFile.size > 0
         ? `${substantial.length} substantial source files`
         : `${sourceFiles.length} source files`;
+}
+
+const RANK = { S: 0, M: 1, L: 2 };
+if (declared && RANK[declared] > RANK[tier]) {
+  why = `declared by the user (measured ${tier}: ${why})`;
+  tier = declared;
 }
 
 const loop =

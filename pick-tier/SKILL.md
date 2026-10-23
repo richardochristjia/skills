@@ -40,7 +40,7 @@ Count only source, test and config files. Ignore lockfiles, generated output and
 4. **Sensitive paths**: anything with `auth` in a path segment, plus `login`, `session`, `permission(s)`, `role(s)`, `acl`, `server/api`, `migrations`, `schema`, `seed`, `.env*`, `Dockerfile`, `docker-compose*`, `Jenkinsfile`, CI configuration (`.github/workflows`, `.gitea/workflows`, `.gitlab-ci.yml`).
 5. **User-visible surfaces**: `pages/`, `views/`, `components/`, `features/`, `app/`, templates, styles — anything a person sees or clicks. These are everyday work, not a reason to raise the tier.
 6. **Substantial files**: a changed source file with 10 or more changed lines. A file touched by a line or two is not a big change, however many files there are. Tests and docs do not count as substantial.
-7. **Declared tier**: the user may name a tier. A user-declared tier is never lowered, only raised.
+7. **Declared tier**: the user may name a tier. A user-declared tier is never lowered, only raised: pass it as `--tier <S|M|L>` and `tier.mjs` keeps the higher of it and the computed tier.
 
 ## Decide
 
