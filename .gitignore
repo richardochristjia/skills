@@ -1,0 +1,8 @@
+.backup/
+.lavish/
+.DS_Store
+.plans/
+.agents/
+docs/
+tests/
+UPSTREAM.md

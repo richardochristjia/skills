@@ -1,0 +1,3 @@
+interface:
+  display_name: "approve-plan"
+  short_description: "Generate a context-rich implementation specification from an approved plan."
