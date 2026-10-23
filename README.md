@@ -35,80 +35,31 @@ terminal multiplexer, no separate session.
 
 ### Overview
 
-```mermaid
-flowchart LR
-    F["plan the change<br/>(forge)"] --> A["approve and start the run<br/>(approve-plan)"]
-    A --> P["size the change<br/>(pick-tier)"]
-    P --> S["Tier S"]
-    P --> M["Tier M"]
-    P --> L["Tier L"]
-
-    classDef build fill:#cfe8ff,stroke:#1f6feb,color:#0b1f3a
-    classDef review fill:#ffe7b3,stroke:#b7791f,color:#3a2a05
-    classDef delivery fill:#cdeccf,stroke:#2f855a,color:#0b2a14
-    class F,A,P build
-    class S,M,L delivery
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/overview-dark.png">
+  <img alt="forge plans the change, approve-plan starts the run, pick-tier sizes it as tier S, M or L" src="assets/overview-light.png" width="100%">
+</picture>
 
 ### Tier S
 
-```mermaid
-flowchart LR
-    B["build<br/>(micro-loop)"] --> PU["push<br/>(ship-plan)"] --> PR["pull request<br/>(ship-plan)"] --> CI["CI status<br/>(ship-plan)"]
-
-    classDef build fill:#cfe8ff,stroke:#1f6feb,color:#0b1f3a
-    classDef review fill:#ffe7b3,stroke:#b7791f,color:#3a2a05
-    classDef delivery fill:#cdeccf,stroke:#2f855a,color:#0b2a14
-    class B build
-    class PU,PR,CI delivery
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/tier-s-dark.png">
+  <img alt="Tier S: build, push the branch, open the pull request, report CI status" src="assets/tier-s-light.png" width="100%">
+</picture>
 
 ### Tier M
 
-```mermaid
-flowchart TD
-    B["build<br/>(micro-loop)"] --> CP["context pack<br/>(context-pack)"]
-    CP --> R["correctness review, one angle<br/>(interrogate)"]
-    R --> FA["falsify<br/>(falsify)"]
-    FA --> FX["fix once"]
-    FX --> V["verify<br/>(check and test)"]
-    V --> PU["push"]
-    PU --> PR["pull request"]
-    PR --> CI["CI status"]
-
-    classDef build fill:#cfe8ff,stroke:#1f6feb,color:#0b1f3a
-    classDef review fill:#ffe7b3,stroke:#b7791f,color:#3a2a05
-    classDef delivery fill:#cdeccf,stroke:#2f855a,color:#0b2a14
-    class B,CP,FX build
-    class R,FA,V review
-    class PU,PR,CI delivery
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/tier-m-dark.png">
+  <img alt="Tier M: build, context pack, correctness review, falsify, fix once, verify, push, pull request, CI status" src="assets/tier-m-light.png" width="100%">
+</picture>
 
 ### Tier L
 
-```mermaid
-flowchart TD
-    B["build<br/>(simple-loop or phased-loop)"] --> CP["context pack<br/>(context-pack)"]
-    CP --> R["review, four angles<br/>(interrogate)"]
-    CP --> CIM["blast radius<br/>(check-impact)"]
-    R --> FA["falsify<br/>(falsify)"]
-    CIM --> FA
-    FA --> FX["fix once"]
-    FX --> D["tidy up<br/>(deslop)"]
-    D --> G["spec check<br/>(gap-analysis)"]
-    G --> V["verify<br/>(check and test)"]
-    V --> PU["push"]
-    PU --> PR["pull request"]
-    PR --> T["browser walkthrough<br/>(taste-test)"]
-    T --> CI["CI status"]
-
-    classDef build fill:#cfe8ff,stroke:#1f6feb,color:#0b1f3a
-    classDef review fill:#ffe7b3,stroke:#b7791f,color:#3a2a05
-    classDef delivery fill:#cdeccf,stroke:#2f855a,color:#0b2a14
-    class B,CP,FX,D build
-    class R,CIM,FA,G,V,T review
-    class PU,PR,CI delivery
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/tier-l-dark.png">
+  <img alt="Tier L: build, context pack, four-angle review and check-impact side by side, falsify, fix once, deslop, gap-analysis, verify, push, pull request, taste-test, CI status" src="assets/tier-l-light.png" width="100%">
+</picture>
 
 ## Skills
 
