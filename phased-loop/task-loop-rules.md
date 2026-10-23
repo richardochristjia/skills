@@ -61,5 +61,5 @@ Add a line the moment you notice the risk, with where it lives and how to check 
 
 ## Finishing
 
-1.  **Lint and format.** Run `lint` and `format`. Fix every error and warning in the files you changed, and leave untouched files alone so the diff stays about the task. Continue only when your changed files have zero warnings. Commit the fixes with `<TASK>: Lints fixed` (micro folds them into its single commit).
+1.  **Lint and format.** Run `lint` and `format`. Fix every error and warning in the files you changed, and leave untouched files alone so the diff stays about the task. Continue only when your changed files have zero warnings. Commit the fixes with `style(<scope>): fix lint` (micro folds them into its single commit).
 2.  **Hand back** to whoever started you: what changed, the divergence notes, how many risks `risks.md` holds, and the test result. Opening the PR is the caller's job (ship-plan does it).

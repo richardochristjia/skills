@@ -24,6 +24,8 @@ node <this skill>/tier.mjs --base origin/master --out .plans/<task>/tier.md
 
 # estimate mode: the files the change would touch
 node <this skill>/tier.mjs --files "components/Card.vue,components/Card.test.ts" --out .plans/<task>/tier.md
+
+# add --phases N once tasks.md exists, to get the LOOP: line right
 ```
 
 In measure mode the base is the merge base of the branch and the default branch, or a ref the caller names. Uncommitted work counts.
@@ -61,6 +63,16 @@ When two tiers could apply, take the higher one. A visible surface (a page, a co
 
 **Estimate mode has no line counts.** When the tier is estimated from a file list, the file count alone never forces tier L: the gate stays at M and the measured diff decides at build time.
 
+## Pick the build loop
+
+The loop is a fixed rule, not a judgement. Pass `--phases N` (the `##` phases in `tasks.md`, leaving out `Verification` and `Manual checks`) once `tasks.md` exists:
+
+- tier S or M: `micro`
+- tier L with a sensitive path, or with more than 3 phases: `phased`
+- every other tier L (including no `--phases` and no sensitive path): `simple`
+
+If the user's approval names a loop, the caller writes `LOOP: <loop> (user)` in `tier.md` in place of the computed line. Nothing else may set a loop the rule didn't pick. Raising the tier mid-run does not change a loop already chosen.
+
 ## Escalate
 
 Any step may raise the tier: write the new tier to `tier.md` and say so in the run. Escalate when the tests fail, when a review finds a defect in a sensitive path, or when the change turns out bigger than measured. Never lower a tier mid-run without the user asking.
@@ -73,6 +85,7 @@ Write `.plans/<task>/tier.md` (create the folder if it does not exist):
 # Tier
 
 TIER: M
+LOOP: micro
 MODE: measure
 BASE: origin/master
 FILES: 7
@@ -97,6 +110,7 @@ LINES: +283/-32
 Rules for the file:
 
 - The `TIER:` line is what other skills read. It is on its own line, in capitals, with nothing else on it.
+- The `LOOP:` line comes right after `TIER:`, on its own line: `micro`, `simple` or `phased`, with ` (user)` appended when the user chose it.
 - `MODE:` says `estimate` or `measure`.
 - The steps list names the model for each step, so the runner never has to guess.
 - The skipped list is explicit, so a reader can see what was left out on purpose.

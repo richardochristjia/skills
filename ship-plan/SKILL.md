@@ -8,7 +8,7 @@ argument-hint: "<absolute path to .plans/task> [micro|simple|phased]"
 
 You run unattended: nobody answers questions. Never stop to ask. When something needs a decision, take the option closest to the plan's intent and keep going. If that changes something the user approved (what the feature does, its scope, an acceptance criterion, a Record entry), add a divergence note to `plan.md` saying what you did instead and why. Stop early only when an unrecoverable error blocks all progress; then go straight to **Report back**.
 
-**Arguments:** the plan folder as an absolute path, and the loop to run.
+**Arguments:** the plan folder as an absolute path, and the loop to run. The loop comes from `tier.md`; the argument only confirms it.
 
 **Never:** merge, force-push, push to the main line, or touch files outside the repo.
 
@@ -30,12 +30,18 @@ Your context is for decisions, not file contents. Run every step below in a fres
 
 Read `.plans/<task>/tier.md`. If it is missing, run the **pick-tier** skill in measure mode against the merge base of the branch and the default branch, and write the file.
 
+Read `LOOP:` from `tier.md` too.
+
+- If the argument differs from `LOOP:` and the line has no `(user)` mark, run the `tier.md` loop and add a divergence note to `plan.md`.
+- If `tier.md` has no `LOOP:` line (an older plan), run `tier.mjs` in measure mode with `--phases` counted from `tasks.md` (`##` headers, leaving out `Verification` and `Manual checks`), and write the line.
+- If the tier is raised mid-run, the loop already chosen stays: a finished build is not re-run.
+
 The tier is a decision, not a suggestion. Run the steps the tier lists, and no others. Never run a step the tier skipped; never add one the tier skipped without the user asking. A step may escalate the tier (see pick-tier); when it does, the new tier replaces the old one for the rest of the run.
 
 | Tier | Steps |
 |---|---|
 | **S** | Build (implement, unit test, lint, commit) → push and merge-request link → CI status |
-| **M** | Build (micro loop: one build, one test run) → context pack → one correctness review → falsify → fix, once → verify → push and merge-request link → CI status |
+| **M** | Build (the `tier.md` loop, micro for tier M) → context pack → one correctness review → falsify → fix, once → verify → push and merge-request link → CI status |
 | **L** | Build → context pack → review (interrogate, blast radius, the repo's own review skill) → falsify → fix, once → simplify and deslop → spec check → verify → **push and merge-request link** → browser walkthrough → CI status |
 
 The merge-request step comes before the optional checks on purpose: a run that hits a usage limit, a sleep or a crash must still leave a branch and a link behind. Anything an optional check finds afterwards is a new commit on the same branch, and it goes to the user.
@@ -53,7 +59,7 @@ In Claude Code that is the Agent tool's `model` parameter. In another harness it
 
 Each step names the model that runs it.
 
-1.  **Build.** A helper runs the chosen loop: `/<loop>-loop <plan folder>`. For the phased loop, the helper is that loop's orchestrator, so don't tell it to run solo. *Sonnet.*
+1.  **Build.** A helper runs the loop from `tier.md`: `/<loop>-loop <plan folder>`. For the phased loop, the helper is that loop's orchestrator, so don't tell it to run solo. *Sonnet.*
 2.  **Context pack.** A helper runs the context-pack skill on the branch and writes `.plans/<task>/context-pack.md`. Every later helper reads that file instead of re-exploring the repository. *Sonnet.*
 3.  **Review.** One reviewer per turn, **correctness first**, then security, then structure, then tests.
     - **Tier M:** the correctness reviewer only. The others run if it reports a critical finding, or if the user asked for them.

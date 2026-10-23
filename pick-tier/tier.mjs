@@ -4,7 +4,10 @@
 //   node tier.mjs --base origin/master            measure the branch diff
 //   node tier.mjs --files a.vue,b.ts              estimate from a file list
 //   node tier.mjs --base origin/master --out .plans/task/tier.md
+//   node tier.mjs --files a.vue,b.ts --phases 4   count tasks.md phases for the loop
 //
+// The LOOP: line is a fixed rule: tier S or M -> micro; tier L with a
+// sensitive path or more than 3 phases -> phased; every other tier L -> simple.
 // Prints the tier.md content. pick-tier adds judgement on top: a
 // user-declared tier, and escalation when a step finds more than it measured.
 import { execSync } from "node:child_process";
@@ -20,9 +23,15 @@ const base = opt("--base");
 const filesArg = opt("--files");
 const out = opt("--out");
 const end = opt("--end");
+const phasesArg = opt("--phases");
+const phases = phasesArg === null ? 0 : Number(phasesArg);
+if (phasesArg !== null && !Number.isInteger(phases)) {
+  console.error("--phases takes a whole number");
+  process.exit(2);
+}
 
 if (!base && !filesArg) {
-  console.error("usage: tier.mjs --base <ref> [--end <ref>] | --files <a,b,c> [--out <file>]");
+  console.error("usage: tier.mjs --base <ref> [--end <ref>] | --files <a,b,c> [--phases <n>] [--out <file>]");
   process.exit(2);
 }
 
@@ -165,6 +174,9 @@ if (docOnly) {
         : `${sourceFiles.length} source files`;
 }
 
+const loop =
+  tier !== "L" ? "micro" : sensitive.length > 0 || phases > 3 ? "phased" : "simple";
+
 const STEPS = {
   S: [
     "Build (implement, unit test, lint, commit) — sonnet",
@@ -204,6 +216,7 @@ const SKIPPED = {
 const md = `# Tier
 
 TIER: ${tier}
+LOOP: ${loop}
 MODE: ${mode}
 BASE: ${baseLabel || "(file list)"}
 FILES: ${files.length}

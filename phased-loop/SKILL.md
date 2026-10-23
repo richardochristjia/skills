@@ -11,6 +11,8 @@ A disciplined workflow for implementing multi-phase coding tasks. `tasks.md` tra
 
 **Arguments:** `$ARGUMENTS` — the plan (a `.plans/<task>/` path or slug). Always run the whole plan.
 
+Picked by pick-tier when the tier is L and the change touches a sensitive path or has more than 3 phases.
+
 **Read `task-loop-rules.md` in this skill's folder first.** It holds the project commands, constraints, concepts, task-list discipline, and finishing steps all three task loops share. This file adds only what is specific to this loop.
 
 **Orchestrated mode:** read [ORCHESTRATED.md](ORCHESTRATED.md) before step 1. It assigns each loop step to you or a subagent; the steps below still define what each must achieve. A subagent whose prompt says to run solo does every step itself instead, skipping ORCHESTRATED.md. Without that instruction, a subagent running this loop (like ship-plan's build helper) is the orchestrator.
@@ -60,7 +62,7 @@ Resolve every judgement call yourself. The rules file says when one needs a dive
 
 4.  **Test.** Run the full `test` suite; all tests pass. Fix any failure before going on.
 
-5.  **Commit and sync.** `commit` with message `<TASK> Phase N: <one sentence>`, then `sync` (resolve conflicts, re-test, commit the merge). Commit only green code.
+5.  **Commit and sync.** `commit` with a Conventional Commit message, `<type>(<scope>): <summary>`, one per phase, with the phase named in the summary or body, then `sync` (resolve conflicts, re-test, commit the merge). Commit only green code.
 
 6.  **Go to step 1.**
 

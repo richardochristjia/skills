@@ -11,6 +11,8 @@ A disciplined workflow for implementing multi-phase coding tasks. `tasks.md` tra
 
 **Arguments:** `$ARGUMENTS` — the plan (a `.plans/<task>/` path or slug). Always run the whole plan.
 
+Picked by pick-tier when the tier is L, with no sensitive path and 3 phases or fewer (or no phase count).
+
 **Read `task-loop-rules.md` in this skill's folder first.** It holds the project commands, constraints, concepts, task-list discipline, and finishing steps all three task loops share. This file adds only what is specific to this loop.
 
 ## Constraints (on top of the shared ones)
@@ -43,7 +45,7 @@ A disciplined workflow for implementing multi-phase coding tasks. `tasks.md` tra
 
 4.  **Verify.** Run the full `test` suite and fix failures before proceeding. If a phase must end with a broken build (a refactor spanning phases), first try reordering tasks so every phase ends green; accept a red phase boundary only when no order allows it.
 
-5.  **Commit and sync.** On a green build: `commit` with message `<TASK> Phase N: <one sentence>`, then `sync` (resolve conflicts, re-test, commit the merge). On a red build: skip both and commit at the next phase that builds.
+5.  **Commit and sync.** On a green build: `commit` with a Conventional Commit message, `<type>(<scope>): <summary>`, one per phase, with the phase named in the summary or body, then `sync` (resolve conflicts, re-test, commit the merge). On a red build: skip both and commit at the next phase that builds.
 
 6.  **Go to step 1.**
 

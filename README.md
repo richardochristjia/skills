@@ -61,6 +61,16 @@ terminal multiplexer, no separate session.
   <img alt="Tier L: build, context pack, four-angle review and check-impact side by side, falsify, fix once, deslop, gap-analysis, verify, push, pull request, taste-test, CI status" src="assets/tier-l-light.png" width="100%">
 </picture>
 
+### Build loops
+
+`LOOP:` in `tier.md` is set by rule, not judgement.
+
+| Loop | Picked when | Checks and tests | Commits | Before each phase |
+|---|---|---|---|---|
+| micro | tier S or M | `check` and `test` once, at the end | one Conventional Commit | nothing |
+| simple | tier L, no sensitive path, 3 phases or fewer | `check` often, `test` per phase | one Conventional Commit per phase | nothing |
+| phased | tier L with a sensitive path, or more than 3 phases | full `check` and `test` per phase | one Conventional Commit per phase | a short code check of the plan against the code |
+
 ## Skills
 
 ```
@@ -68,9 +78,9 @@ forge/           plans a change with you before any code is written
 approve-plan/    writes the spec and task list, then starts the run
 ship-plan/       the pipeline: build to pull request, unattended
 pick-tier/       decides the depth of a run from the change's size and risk
-micro-loop/      task loop for tier S and M work
-simple-loop/     task loop for everyday tier L work
-phased-loop/     task loop for phased, risky or large work
+micro-loop/      task loop for tier S and M (picked by rule)
+simple-loop/     task loop for tier L, 3 phases or fewer, no sensitive path
+phased-loop/     task loop for tier L with a sensitive path or over 3 phases
 context-pack/    one digest of the change, so reviewers don't re-read the repo
 interrogate/     four-angle review (or one angle for small changes)
 check-impact/    finds what a change could break outside the diff

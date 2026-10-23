@@ -11,6 +11,8 @@ A fast path for simple phased plans. Trades per-phase safety checkpoints for wal
 
 **Arguments:** `$ARGUMENTS` — the plan (a `.plans/<task>/` path or slug). Always run the whole plan.
 
+Picked by pick-tier when the tier is S or M.
+
 **Read `task-loop-rules.md` in this skill's folder first.** It holds the project commands, constraints, concepts, task-list discipline, and finishing steps all three task loops share. This file adds only what is specific to this loop.
 
 ## Constraints (on top of the shared ones)
@@ -53,7 +55,7 @@ All phases are done and the list is clean. Run these in order without stopping, 
 
 3.  **Lint and format** as in **Finishing** step 1 of the rules file.
 
-4.  **Commit once** with message `<TASK>: <one sentence>`, only after check, tests and lints pass. If an unrecoverable failure blocks verification, stop and report instead of committing.
+4.  **Commit once** with a Conventional Commit message, `<type>(<scope>): <summary>` (lowercase, imperative, 72 characters or fewer), only after check, tests and lints pass. If an unrecoverable failure blocks verification, stop and report instead of committing.
 
 5.  **Sync.** Run `sync` once (resolve conflicts, re-test, commit the merge).
 
