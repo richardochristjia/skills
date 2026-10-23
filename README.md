@@ -71,6 +71,15 @@ terminal multiplexer, no separate session.
 | simple | tier L, no sensitive path, 3 phases or fewer | `check` often, `test` per phase | one Conventional Commit per phase | nothing |
 | phased | tier L with a sensitive path, or more than 3 phases | full `check` and `test` per phase | one Conventional Commit per phase | a short code check of the plan against the code |
 
+**micro** is for small, low-risk changes where speed matters more than checkpoints. It edits every phase first, then runs `check` and `test` once and makes one commit.
+Example: fix a typo in an error message, or add a field to one form plus its test.
+
+**simple** is for everyday multi-phase work. It uses `check` errors to steer the edits, runs tests and makes a commit per phase, so a broken phase rolls back alone.
+Example: rename a helper across 8 files, then update its callers and docs, in 2 or 3 phases.
+
+**phased** is for risky work, or work where later phases depend on what earlier ones find. Before each phase it checks the plan against the code, and after each phase it runs the full tests.
+Example: change how the auth middleware checks tokens (a sensitive path), or run a 5-phase migration.
+
 ## Skills
 
 ```
