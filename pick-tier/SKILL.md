@@ -73,6 +73,10 @@ The loop is a fixed rule, not a judgement. Pass `--phases N` (the `##` phases in
 
 If the user's approval names a loop, the caller writes `LOOP: <loop> (user)` in `tier.md` in place of the computed line. Nothing else may set a loop the rule didn't pick. Raising the tier mid-run does not change a loop already chosen.
 
+## Configuration
+
+`tier.mjs` is the only reader of the workflow config. It merges `<repo>/.agents/workflow.json` over `~/.agents/workflow.json` over the built-in defaults, validates it (exit 2, naming the key and file), and writes the resolved values into `tier.md`. Every other skill reads `tier.md`. Keys, lookup order and errors are in [CONFIG.md](CONFIG.md); [workflow.example.json](workflow.example.json) holds every key at its default.
+
 ## Escalate
 
 Any step may raise the tier: write the new tier to `tier.md` and say so in the run. Escalate when the tests fail, when a review finds a defect in a sensitive path, or when the change turns out bigger than measured. Never lower a tier mid-run without the user asking. When `tier.md` is rewritten, keep every Steps line marked `(user)`.
@@ -110,7 +114,9 @@ LINES: +283/-32
 Rules for the file:
 
 - The `TIER:` line is what other skills read. It is on its own line, in capitals, with nothing else on it.
-- The `LOOP:` line comes right after `TIER:`, on its own line: `micro`, `simple` or `phased`, with ` (user)` appended when the user chose it.
+- The `LOOP:` line comes right after `TIER:`, on its own line: `micro`, `simple` or `phased`, with ` (user)` appended when the user chose it, or ` (config)` when the config replaced the computed loop.
+- After `LINES:` come `CONFIG:` (the config files read, comma-separated, or `none`), `DELIVERY:`, `ORCHESTRATOR: <model> <effort>`, `BASE_BRANCH:`, `BRANCH_PREFIX:` (`none` when empty) and `FIXTURE:`.
+- A value from the config that differs from the built-in default ends ` (config)`; a value equal to the default has no mark. A `(user)` line is kept on rewrite and beats `(config)`.
 - `MODE:` says `estimate` or `measure`.
 - The steps list names the model for each step, so the runner never has to guess. A line the user chose ends with ` (user)`, e.g. `Build — haiku (user)`; every rewrite of the file (escalation or a re-run of `tier.mjs`) keeps those lines, as it does `LOOP: ... (user)`.
 - The skipped list is explicit, so a reader can see what was left out on purpose.

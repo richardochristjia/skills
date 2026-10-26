@@ -49,34 +49,38 @@ The merge-request step comes before the optional checks on purpose: a run that h
 
 ## Models
 
-Name the model when you spawn a helper. Use the model its step names in `tier.md`'s Steps list when that line carries `(user)`; otherwise the defaults below apply.
-
-- **Opus** for the plan, for the fix step, and for any judgement about whether a finding is real.
-- **Sonnet** for everything else: build, context pack, review, falsify, simplify, spec check, verify, browser walkthrough, delivery, CI.
+Name the model when you spawn a helper. Each line of `tier.md`'s Steps list reads `<step> — <model>[ (mark)]`; use that model for that step, whatever the mark. `tier.md` is the only source of models: this skill holds no defaults. The orchestrator's own model and effort are the `ORCHESTRATOR:` line.
 
 In Claude Code that is the Agent tool's `model` parameter. In another harness it is whatever the equivalent is — a second session with that model, a CLI invocation with a model flag, a cheap-model profile. If the harness cannot pick a model per agent, use one model for the whole run and say so in the report.
 
 ## Steps
 
-Each step names the model that runs it. These labels are the defaults; a `(user)` line in `tier.md` overrides them.
+The model for each step is its line in `tier.md`'s Steps list. A step missing from that list (or listed under Skipped) is not run: checkpoint it as `status: skipped`.
 
-1.  **Build.** A helper runs the loop from `tier.md`: `/<loop>-loop <plan folder>`. For the phased loop, the helper is that loop's orchestrator, so don't tell it to run solo. *Sonnet.*
-2.  **Context pack.** A helper runs the context-pack skill on the branch and writes `.plans/<task>/context-pack.md`. Every later helper reads that file instead of re-exploring the repository. *Sonnet.*
+1.  **Build.** A helper runs the loop from `tier.md`: `/<loop>-loop <plan folder>`. For the phased loop, the helper is that loop's orchestrator, so don't tell it to run solo.
+2.  **Context pack.** A helper runs the context-pack skill on the branch and writes `.plans/<task>/context-pack.md`. Every later helper reads that file instead of re-exploring the repository.
 3.  **Review.** One reviewer per turn, **correctness first**, then security, then structure, then tests.
     - **Tier M:** the correctness reviewer only. The others run if it reports a critical finding, or if the user asked for them.
     - **Tier L:** all four angles, one per turn, plus check-impact on the branch's diff, plus the repo's own review skill or agent if it has one. If the harness grants a fan-out token, run them at once and save the turns.
     - Every reviewer reads the context pack first and cites it. It must back every finding with proof: a real run that shows it, or a test that fails now and would pass with the fix. Merge their reports and drop duplicates. The must-fix findings are interrogate's **Act on**, a blast-radius risk it confirmed, and a broken written rule of the repo.
-4.  **Falsify.** A helper runs falsify on the must-fix findings, with the plan folder and the branch's diff. No proof, no fix: an unproven finding is left open or dismissed. *Sonnet.*
-5.  **Fix, once.** One helper does what falsify ruled (cut, narrow, fix) and fixes the browser walkthrough's broke lines. Each fix comes with a test that fails without it, where a test can show it. A fix that needs a new rule or special case (a branch for one input, a new setting or flag) isn't made: it goes to **Needs your call**, since it often means the design is wrong. There is no second fix round. *Opus.*
-6.  **Simplify.** A helper runs the `simplify` skill if you have it, then deslop, on the branch's changes, then runs `test`. *Tier L only. Sonnet.*
-7.  **Spec check.** A helper runs gap-analysis on the plan folder, fixes every gap it lists, then runs `check` and `test` until both pass. *Tier L only. Sonnet.*
-8.  **Verify.** A helper runs `check` and `test` **once, at the end**, then lints and formats the files that changed, and fixes until everything passes. Do not run the suite after every phase, and do not run it a second time against another ref to count pre-existing failures — that is a whole extra run for no signal. Type check only when the repo's type-check command actually works: check that it exits cleanly first, and if it is broken, say so and skip it. *Sonnet.*
-9.  **Push and open the pull request.** A helper pushes the branch and opens the pull request with the description below, using the repo's own tooling if it has any. It returns the link. Then stop every helper still running. **Tier S, M and L.** *Sonnet.* See **The delivery step**.
-10. **Browser walkthrough.** A helper runs the taste-test skill against the plan folder, using the repo's committed fixture. Anything still broken goes to **Needs your call**; don't fix it. *Tier L only. Sonnet.*
-11. **CI status.** A helper reports the CI state of the branch. *Sonnet.*
+4.  **Falsify.** A helper runs falsify on the must-fix findings, with the plan folder and the branch's diff. No proof, no fix: an unproven finding is left open or dismissed.
+5.  **Fix, once.** One helper does what falsify ruled (cut, narrow, fix) and fixes the browser walkthrough's broke lines. Each fix comes with a test that fails without it, where a test can show it. A fix that needs a new rule or special case (a branch for one input, a new setting or flag) isn't made: it goes to **Needs your call**, since it often means the design is wrong. There is no second fix round.
+6.  **Simplify.** A helper runs the `simplify` skill if you have it, then deslop, on the branch's changes, then runs `test`. *Tier L only.*
+7.  **Spec check.** A helper runs gap-analysis on the plan folder, fixes every gap it lists, then runs `check` and `test` until both pass. *Tier L only.*
+8.  **Verify.** A helper runs `check` and `test` **once, at the end**, then lints and formats the files that changed, and fixes until everything passes. Do not run the suite after every phase, and do not run it a second time against another ref to count pre-existing failures — that is a whole extra run for no signal. Type check only when the repo's type-check command actually works: check that it exits cleanly first, and if it is broken, say so and skip it.
+9.  **Deliver.** A helper delivers the branch as the `DELIVERY:` line of `tier.md` says (see **The delivery step**), using the repo's own tooling if it has any. It returns the link, or `branch <x>, not pushed` for `local`. Then stop every helper still running. **Tier S, M and L.**
+10. **Browser walkthrough.** A helper runs the taste-test skill against the plan folder, using the repo's committed fixture. Anything still broken goes to **Needs your call**; don't fix it. *Tier L only.*
+11. **CI status.** A helper reports the CI state of the branch.
 12. **Report back.** You do this one.
 
 ## The delivery step
+
+Read `DELIVERY:` in `tier.md` (the mark is not part of the value). A run always works on a new branch, `local` included.
+
+- `pr` — the default, described below.
+- `draft-pr` — as `pr`, but open it as a draft: `gh pr create --draft`, `glab mr create --draft`, and on Gitea a title prefixed `WIP: `. In the link-only fallback, say it was not opened as a draft.
+- `push` — push the branch and print its link; do not open a pull request. CI status still runs.
+- `local` — commit on the branch only: no push, no link. CI status is skipped (it is under Skipped in `tier.md`). The report says `branch <x>, not pushed`.
 
 **The default is GitHub.** `gh pr create` opens the pull request and `gh pr checks --watch` reports CI. When the remote turns out to be something else, detection overrides the default. The default keeps this skill generic: it works on a GitHub repo with no setup, and on any other forge once the platform is detected.
 
@@ -135,6 +139,6 @@ Everything else stays in the plan folder: every divergence note, open and dismis
 
 ## Report back
 
-One line: `<plan name>: pull request <link>. CI <green|red|unknown>. <N> need your call.` (or what stopped you, if you stopped early).
+One line: `<plan name>: <outcome>. CI <green|red|unknown|skipped>. <N> need your call.` (or what stopped you, if you stopped early). The outcome is `pull request <link>` for `pr`, `draft pull request <link>` for `draft-pr`, `pushed <link>` for `push`, and `branch <x>, not pushed` for `local`.
 
 End your final message with that line. It is the only thing the user needs to read; the findings, the risks and the divergences stay in the plan folder.

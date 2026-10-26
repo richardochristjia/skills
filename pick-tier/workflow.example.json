@@ -1,0 +1,16 @@
+{
+  "models": { "default": "sonnet", "fix": "opus" },
+  "orchestrator": { "model": "inherit", "effort": "high" },
+  "delivery": "pr",
+  "tier": {
+    "force": null,
+    "substantialLines": 10,
+    "maxMediumFiles": 5,
+    "sensitivePaths": []
+  },
+  "loop": null,
+  "steps": { "skip": [] },
+  "baseBranch": "auto",
+  "branchPrefix": "",
+  "fixture": ".harness/"
+}

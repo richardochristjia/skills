@@ -15,7 +15,7 @@ Tests pass against fakes; users hit the real thing. You run the build the way it
 
 ## Set up a throwaway copy
 
-1. **Use the repo's committed fixture if it has one:** a `.harness/` folder in the repo, holding a fake backend and a driver that walks the UI. Run its scripts as they show; don't retype their steps. Launch, check and drive the program, and clean up, as it says. A fixture is a fake backend the repo ships: it must never contact a real backend, and it must not need credentials. If the repo has no fixture, look in `AGENTS.md` / `CLAUDE.md` for how to try it.
+1. **Use the repo's committed fixture if it has one:** the folder named by `FIXTURE:` in `.plans/<task>/tier.md` when that line is present, else `.harness/`, in the repo, holding a fake backend and a driver that walks the UI. Run its scripts as they show; don't retype their steps. Launch, check and drive the program, and clean up, as it says. A fixture is a fake backend the repo ships: it must never contact a real backend, and it must not need credentials. If the repo has no fixture, look in `AGENTS.md` / `CLAUDE.md` for how to try it.
 2. **Otherwise build a setup,** and put the steps in your report, so the repo can commit it as a fixture next time:
    - a temp folder for the program's home, config and state, so nothing you do reaches the user's real copy;
    - a fake of the service the program talks to, in the temp folder, so the run never writes to a real system;
