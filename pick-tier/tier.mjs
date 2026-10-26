@@ -340,6 +340,7 @@ const prev = out && fs.existsSync(out) ? fs.readFileSync(out, "utf8") : "";
 const userSteps = new Map();
 for (const m of prev.matchAll(/^\d+\. (.+?) — .+ \(user\)$/gm)) userSteps.set(m[1], m[0].replace(/^\d+\. /, ""));
 const userLoop = prev.match(/^LOOP: (.+) \(user\)$/m);
+const userBase = prev.match(/^BASE_BRANCH: (.+) \(user\)$/m);
 
 const STEPS = {
   S: [
@@ -405,7 +406,7 @@ LINES: ${lines > 0 ? `+${lines}` : "(not measured)"}
 CONFIG: ${configPaths.length ? configPaths.join(", ") : "none"}
 DELIVERY: ${config.delivery}${mark(config.delivery, DEFAULTS.delivery)}
 ORCHESTRATOR: ${config.orchestrator.model} ${config.orchestrator.effort}${mark(config.orchestrator, DEFAULTS.orchestrator)}
-BASE_BRANCH: ${config.baseBranch}${mark(config.baseBranch, DEFAULTS.baseBranch)}
+BASE_BRANCH: ${userBase ? `${userBase[1]} (user)` : `${config.baseBranch}${mark(config.baseBranch, DEFAULTS.baseBranch)}`}
 BRANCH_PREFIX: ${config.branchPrefix || "none"}${mark(config.branchPrefix, DEFAULTS.branchPrefix)}
 FIXTURE: ${config.fixture}${mark(config.fixture, DEFAULTS.fixture)}
 
