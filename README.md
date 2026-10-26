@@ -18,10 +18,17 @@ npx skills update -g                                   # pull the latest later
 2. **approve-plan** turns the approved plan into a spec and a task list, and starts the run.
 3. **ship-plan** runs the pipeline unattended, on a branch, and ends with a pull request link.
 
-The plan and fix steps run on Opus. Every other step runs on Sonnet. That is the default: name a model for a step when you approve (for example "build on haiku") and that step uses it. A run
+The fix step runs on Opus and every other step on Sonnet by default. Change that in the config, or name a model for a step when you approve (for example "build on haiku") and that step uses it. A run
 writes a checkpoint after every step, so an interrupted run resumes instead of
 starting over. Nothing beside the harness you are already in is needed: no
 terminal multiplexer, no separate session.
+
+## Configuration
+
+Lasting defaults (models, delivery mode, tier thresholds, loop, skipped steps,
+branch naming, fixture path) live in `<repo>/.agents/workflow.json` or
+`~/.agents/workflow.json`. See [pick-tier/CONFIG.md](pick-tier/CONFIG.md) and
+[pick-tier/workflow.example.json](pick-tier/workflow.example.json).
 
 ## Tiers
 
