@@ -62,7 +62,7 @@ const DEFAULTS = {
   tier: { force: null, substantialLines: 10, maxMediumFiles: 5, sensitivePaths: [] },
   loop: null,
   steps: { skip: [] },
-  baseBranch: "auto",
+  baseBranch: "development",
   branchPrefix: "",
   fixture: ".harness/",
 };

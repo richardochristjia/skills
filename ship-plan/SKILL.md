@@ -28,7 +28,7 @@ Your context is for decisions, not file contents. Run every step below in a fres
 
 ## The tier decides the steps
 
-Read `.plans/<task>/tier.md`. If it is missing, run the **pick-tier** skill in measure mode against the merge base of the branch and the default branch, and write the file.
+Read `.plans/<task>/tier.md`. If it is missing, run the **pick-tier** skill in measure mode against the merge base of the branch and the base branch, and write the file.
 
 Read `LOOP:` from `tier.md` too.
 
@@ -78,11 +78,13 @@ The model for each step is its line in `tier.md`'s Steps list. A step missing fr
 Read `DELIVERY:` in `tier.md` (the mark is not part of the value). A run always works on a new branch, `local` included.
 
 - `pr` — the default, described below.
-- `draft-pr` — as `pr`, but open it as a draft: `gh pr create --draft`, `glab mr create --draft`, and on Gitea a title prefixed `WIP: `. In the link-only fallback, say it was not opened as a draft.
+- `draft-pr` — as `pr`, but open it as a draft: `gh pr create --base <base> --draft`, `glab mr create --target-branch <base> --draft`, and on Gitea a title prefixed `WIP: `. In the link-only fallback, say it was not opened as a draft.
 - `push` — push the branch and print its link; do not open a pull request. CI status still runs.
 - `local` — commit on the branch only: no push, no link. CI status is skipped (it is under Skipped in `tier.md`). The report says `branch <x>, not pushed`.
 
-**The default is GitHub.** `gh pr create` opens the pull request and `gh pr checks --watch` reports CI. When the remote turns out to be something else, detection overrides the default. The default keeps this skill generic: it works on a GitHub repo with no setup, and on any other forge once the platform is detected.
+**The default is GitHub.** `gh pr create --base <base>` opens the pull request and `gh pr checks --watch` reports CI. When the remote turns out to be something else, detection overrides the default. The default keeps this skill generic: it works on a GitHub repo with no setup, and on any other forge once the platform is detected.
+
+**The base** is the `BASE_BRANCH:` line of `tier.md` with the mark stripped; `auto` means the repo's default branch. Every pull request or merge request targets it: pass it explicitly, never rely on the platform default.
 
 Detect the platform before running any host-specific command:
 
@@ -92,17 +94,17 @@ curl -s --max-time 5 https://<host>/api/v1/version   # Gitea and Forgejo answer 
 ls .github/workflows .gitea/workflows .gitlab-ci.yml Jenkinsfile 2>/dev/null
 ```
 
-- **GitHub** — the default, and the answer whenever nothing else matches: `gh pr create` with the description; CI with `gh pr checks --watch`.
-- **Gitea or Forgejo** (the version probe answers): the pull request is a *pull request*, not a merge request, and its link has the shape `<repo-url>/pulls/new/<branch>`.
-  - `tea` installed → `tea pr create`.
-  - no `tea`, but a token in the environment (`GITEA_TOKEN`, `TEA_TOKEN`, or a `gitea-token` file in the plan folder) → open it through the API: `POST <host>/api/v1/repos/<owner>/<repo>/pulls` with `head` (the branch), `base` (the default branch), `title` and `body` (the description).
+- **GitHub** — the default, and the answer whenever nothing else matches: `gh pr create --base <base>` with the description; CI with `gh pr checks --watch`.
+- **Gitea or Forgejo** (the version probe answers): the pull request is a *pull request*, not a merge request, and its link has the shape `<repo-url>/compare/<base>...<branch>`.
+  - `tea` installed → `tea pr create --base <base>`.
+  - no `tea`, but a token in the environment (`GITEA_TOKEN`, `TEA_TOKEN`, or a `gitea-token` file in the plan folder) → open it through the API: `POST <host>/api/v1/repos/<owner>/<repo>/pulls` with `head` (the branch), `base` (the base), `title` and `body` (the description).
   - neither → push the branch and print the link for a human to open:
     ```
-    <repo-url>/pulls/new/<branch>
+    <repo-url>/compare/<base>...<branch>
     ```
     Say plainly that the human opens it.
   - CI: Gitea Actions → `GET <host>/api/v1/repos/<owner>/<repo>/commits/<ref>/status` with the same token. Without a token the status is not readable: report "CI unknown".
-- **GitLab** (`.gitlab-ci.yml` present, or the host answers GitLab's API): `glab mr create` and `glab ci status` when `glab` is installed and authenticated; otherwise push the branch and print `<repo-url>/-/merge_requests/new?merge_request[source_branch]=<branch>`.
+- **GitLab** (`.gitlab-ci.yml` present, or the host answers GitLab's API): `glab mr create --target-branch <base>` and `glab ci status` when `glab` is installed and authenticated; otherwise push the branch and print `<repo-url>/-/merge_requests/new?merge_request[source_branch]=<branch>&merge_request[target_branch]=<base>`.
 - **Jenkins only** (`Jenkinsfile` at the root and no CI config above): push the branch, print the pull-request link, and report CI as "CI unknown — Jenkins runs on push". If the plan folder holds a `ci-url` file, the helper reads that URL's JSON API (with a token from the environment, if one is there) and reports the build status.
 
 **When the platform is not confirmed.** If detection is inconclusive and `gh` fails, push the branch and print the link for the platform that was detected; if nothing was detected, print the GitHub form:

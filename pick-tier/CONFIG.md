@@ -193,12 +193,12 @@ Step ids to leave out of the run.
 
 ### `baseBranch`
 
-Branch a run starts from.
+Branch a run starts from, and the branch its pull request targets.
 
-- **Type and values:** non-empty string
-- **Default:** `auto` (the repo's detected default branch)
-- **Effect on `tier.md`:** `BASE_BRANCH: <value>`, marked when not `auto`.
-- **Read by:** approve-plan
+- **Type and values:** non-empty string. `auto` means the repo's default branch.
+- **Default:** `development`
+- **Effect on `tier.md`:** `BASE_BRANCH: <value>`, marked when not `development`. When the value is unmarked, approve-plan checks that the branch exists on the remote and asks you if it does not. A set value is trusted and not checked.
+- **Read by:** approve-plan, ship-plan
 - **Validation:** empty or non-string: `baseBranch: must be a non-empty string`.
 
 ```json
@@ -249,7 +249,7 @@ Folder of the committed fake backend the browser walkthrough runs against.
 | `CONFIG:` | the files read | `none` |
 | `DELIVERY:` | `delivery` | `pr` |
 | `ORCHESTRATOR:` | `orchestrator.model`, `orchestrator.effort` | `inherit high` |
-| `BASE_BRANCH:` | `baseBranch` | `auto` |
+| `BASE_BRANCH:` | `baseBranch` | `development` |
 | `BRANCH_PREFIX:` | `branchPrefix` | `none` |
 | `FIXTURE:` | `fixture` | `.harness/` |
 

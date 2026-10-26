@@ -10,7 +10,7 @@
   },
   "loop": null,
   "steps": { "skip": [] },
-  "baseBranch": "auto",
+  "baseBranch": "development",
   "branchPrefix": "",
   "fixture": ".harness/"
 }

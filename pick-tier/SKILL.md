@@ -28,7 +28,7 @@ node <this skill>/tier.mjs --files "components/Card.vue,components/Card.test.ts"
 # add --phases N once tasks.md exists, to get the LOOP: line right
 ```
 
-In measure mode the base is the merge base of the branch and the default branch, or a ref the caller names. Uncommitted work counts.
+In measure mode the base is the merge base of the branch and `BASE_BRANCH:` (`auto` means the default branch), or a ref the caller names. Uncommitted work counts.
 
 Count only source, test and config files. Ignore lockfiles, generated output and vendored directories.
 
