@@ -69,7 +69,7 @@ The model for each step is its line in `tier.md`'s Steps list. A step missing fr
 7.  **Spec check.** A helper runs gap-analysis on the plan folder, fixes every gap it lists, then runs `check` and `test` until both pass. *Tier L only.*
 8.  **Verify.** A helper runs `check` and `test` **once, at the end**, then lints and formats the files that changed, and fixes until everything passes. Do not run the suite after every phase, and do not run it a second time against another ref to count pre-existing failures — that is a whole extra run for no signal. Type check only when the repo's type-check command actually works: check that it exits cleanly first, and if it is broken, say so and skip it.
 9.  **Deliver.** A helper delivers the branch as the `DELIVERY:` line of `tier.md` says (see **The delivery step**), using the repo's own tooling if it has any. It returns the link, or `branch <x>, not pushed` for `local`. Then stop every helper still running. **Tier S, M and L.**
-10. **Browser walkthrough.** A helper runs the taste-test skill against the plan folder, using the repo's committed fixture. Anything still broken goes to **Needs your call**; don't fix it. *Tier L only.*
+10. **Browser walkthrough.** A helper runs the taste-test skill against the plan folder, using the repo's committed fixture. If there is none, skip it and report "no fixture at `<path>` — run `make-fixture` in this repo". Anything still broken goes to **Needs your call**; don't fix it. *Tier L only.*
 11. **CI status.** A helper reports the CI state of the branch.
 12. **Report back.** You do this one.
 
