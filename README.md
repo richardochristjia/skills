@@ -104,6 +104,7 @@ falsify/         argues against review findings before they are fixed
 deslop/          removes AI-generated slop from a branch's code
 gap-analysis/    checks an implementation against its acceptance criteria
 taste-test/      tries the build like a user, against a committed fixture
+make-fixture/   writes the committed browser fixture for a repo, for a person to review
 diagnose-bug/    finds and proves the cause of a bug, then hands over a fix plan
 unslop/          cuts AI tells from writing
 wait-what/       restates the last message in plain language
