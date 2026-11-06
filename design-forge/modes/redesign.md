@@ -19,7 +19,7 @@ List it in the plan: routes, forms and their fields, data, behaviour, brand asse
 
 ## Brand lock
 
-Use the look-source rule in SKILL.md: declared tokens (system) or given brand colours (brand). Record it in the Look line. When the checker flags something the brand really needs, write the check id and the reason as an allowance in the Design section.
+Use the look-source rule in SKILL.md (system or brand) and record it in the Look line. When the checker flags something the brand really needs, write the check id and the reason as an allowance in the Design section.
 
 ## Variants
 
