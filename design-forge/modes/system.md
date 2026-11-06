@@ -1,14 +1,6 @@
 # System mode
 
-Clean up an existing design system: too many greys, nine font sizes, colours that almost match. The result is a pull request that replaces values with a smaller set. Never edit source in planning.
-
-## What the inspector reports
-
-Probed with `inspect.mjs <file> --json` on a scratch page (the report prints to stdout and also goes to `report.json` in `--out`). Per width it reports the font families and the type sizes in use, the text colours with their share, the section background colours, and counts of shadows, gradients, hairlines and rounded boxes. It reports no spacing, no declared tokens, and no count of where a value is used in the source. Use it on one representative screen for the measured side. Get the rest from the source.
-
-```
-node <taste>/scripts/inspect.mjs <url or file.html> --widths <named> --json --out .plans/<task>/taste/before
-```
+Clean up an existing design system: too many greys, nine font sizes, colours that almost match. The result is a pull request that replaces values with a smaller set. Never edit source in planning. The token inventory comes from the source only.
 
 ## Token inventory
 
@@ -19,12 +11,15 @@ node <taste>/scripts/inspect.mjs <url or file.html> --widths <named> --json --ou
 
 ## The smaller set
 
-Propose it against taste's laws:
+Propose it against taste's `references/system.md`:
 - One ground, one ink, one accent, plus tone steps for surfaces.
-- At most 5 type sizes and at most 2 faces.
-- Tone steps instead of shadows and borders.
-- One radius, or two if the brand needs them.
+- Type: at most 2 faces and taste's scale.
+- One radius scale.
+- One button pair.
+- One card style.
 - A spacing scale with few steps.
+
+Measure on the named screens, before and after: run the page gate or the app gate and compare the one-system checks (`button-styles`, `button-shape`, `card-family`, `link-styles`, `heading-scale`, `contrast`).
 
 Map every old value to a new one, or mark it for removal. Say what visibly changes, and list the screens that move.
 
