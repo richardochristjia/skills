@@ -36,7 +36,7 @@ State the mode in one line with the reason. Then read only that mode's file.
 
 - "Improve the design system" with no other signal: ask one chat question. A) Clean up the code (system mode). B) Export to Figma (system mode, hand-off only). Recommend A.
 - **Page or app screen** is taste's first decision. Record it with the mode.
-- **Mixed** (a page plus the app behind it): two draws that share one palette and type face.
+- **Mixed** (a page plus the app behind it): two draws. The agent maps the page palette and type face onto the app sheet by hand.
 
 ## 3. Responsive matrix
 
@@ -59,7 +59,7 @@ Read the app. Never edit its source.
 
 Load the lavish skill, else run `npx -y lavish-axi --help`. Put the page in `.lavish/`. Never run `lavish-axi share`: shares are public.
 
-- **Tier S:** no page, no dialogue, no draw. A short plan in chat. The gate still runs.
+- **Tier S:** no page, no dialogue, no draw. A short plan in chat. Tier S has no Verify; Build runs the Gate line after the look loop.
 - **Tier M:** the direction cards and any trade-off question on a page. The plan in chat.
 - **Tier L:** the cards, then the mock (below), then the plan as a page.
 
@@ -89,7 +89,7 @@ Use forge's format. Add a `## Design` section in this shape. approve-plan copies
 ## Design
 - Plan folder: .plans/<task>/
 - Mode: <mode>[ + native] · kind: page|app|mixed|component
-- Direction: <id> · seed <n> · sheet .plans/<task>/taste/direction.json · redraws: <slot — reason>…
+- Direction: <id> · seed <n> · sheet .plans/<task>/taste/direction.json · redraws: <slot — reason>… (or `none (no draw)`)
 - Kept from brand: palette|type|none · allowances: <rule — reason>…
 - Idea: On this page, <thing of the subject> becomes <device>. Live thing: <…>
 - Argument and copy outline: <one claim per section; headlines ≤ 2 lines; sample content flagged>
@@ -100,7 +100,7 @@ Use forge's format. Add a `## Design` section in this shape. approve-plan copies
 - States: <screen × empty|zero|loading|error|success|no-permission table>
 - Tokens (system mode): .plans/<task>/taste/tokens.md
 - Before: .plans/<task>/taste/before · critique score <n>
-- Gate: lint.mjs clean · inspect.mjs exit 0 at <widths> · scenes.mjs clean if scenes · after score ≥ before
+- Gate: lint.mjs exit 0 · inspect.mjs exit 0 at <widths> · scenes.mjs exit 0 if scenes · after score ≥ before
 ```
 
 Acceptance criteria always include the gate line. A criterion only a person or a real device can check is `manual:`.

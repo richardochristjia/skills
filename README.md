@@ -18,12 +18,13 @@ npx skills update -g                                   # pull the latest later
 2. **approve-plan** turns the approved plan into a spec and a task list, and starts the run.
 3. **ship-plan** runs the pipeline unattended, on a branch, and ends with a pull request link.
 
-For UI design work (new screens, redesigns, flows, design-system cleanup, native apps), start with **design-forge** instead of forge. It plans with the same steps and adds a design section that approve-plan and ship-plan carry through.
+For UI design work (new screens, redesigns, flows, design-system cleanup, native apps), start with **design-forge** in place of forge for UI work, following forge's rules. It plans with the same steps and adds a design section that approve-plan and ship-plan carry through.
 
 The fix step runs on Opus and every other step on Sonnet by default. Change that in the config, or name a model for a step when you approve (for example "build on haiku") and that step uses it. A run
 writes a checkpoint after every step, so an interrupted run resumes instead of
 starting over. Nothing beside the harness you are already in is needed: no
-terminal multiplexer, no separate session.
+terminal multiplexer, no separate session. design-forge also needs taste, Node 22+
+and Chrome.
 
 ## Configuration
 
