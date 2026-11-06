@@ -29,7 +29,7 @@ Rules are in `app.md`.
 
 ## Mixed
 
-A page plus the app behind it. One Look for both. The page runs the page steps. The app screens follow `app.md` with the same tokens. Every interface fragment the page shows is built by the app rules.
+A page plus the app behind it, one Look for both. The page runs the page steps. The app screens and any interface fragment the page shows follow `app.md`.
 
 ## Component
 

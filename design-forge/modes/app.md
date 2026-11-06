@@ -40,7 +40,3 @@ Score the `shoot.mjs` screenshots, before and after:
 ```
 node <taste>/scripts/shoot.mjs --url <url or file> --w <width> --out .plans/<task>/taste/<before|after>/<screen>-<width>.png --profile <dir>
 ```
-
-## Native
-
-The platform frame rules stay in `native.md`. These rules apply to the content inside the frame.
