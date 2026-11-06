@@ -80,7 +80,7 @@ Take the first that fits:
 
 1. **System.** The repo declares tokens (CSS custom properties, a Tailwind theme, token files): keep them. No deal. `Look: system`.
 2. **Brand.** The user gives brand colours, and maybe fonts: `node <taste>/scripts/start.mjs brand --page <kind> --bg ".." --ink ".." --accent ".." --type <id> --radius soft`. A font outside taste's ids: take the nearest id from `start.mjs types --page <kind>`, then swap the `--font-display` and `--font-text` lines by hand. Log the swap as an allowance.
-3. **Deal.** `node <taste>/scripts/start.mjs deal --page <kind> --history <file>` gives 3 palettes and 3 type pairings. Show them as cards on the lavish page. The user picks one of each. Then `start.mjs css --page <kind> --palette <id> --type <id> --radius sharp|soft|round --history <file>` prints the tokens. A page also runs `node <taste>/assets/layout/deal.mjs --type <page type> --has <photo,ui,object,film> --history <file>` for the hero. A place's hero is printed, not dealt, and a place always uses `start.mjs brand`.
+3. **Deal.** `node <taste>/scripts/start.mjs deal --page <kind> --history <file>` gives 3 palettes and 3 type pairings. Show them as cards on the lavish page. The user picks one of each. Then `start.mjs css --page <kind> --palette <id> --type <id> --radius sharp|soft|round --history <file>` prints the tokens. A page also runs `node <taste>/assets/layout/deal.mjs --type <software|product|place|service> --has <photo,ui,object,film> --history <file>` for the hero. Hardware: `--type product --kind tech`. A game: `--type software --kind gaming`, and `--has` must name what the brief has (`film` or `photo`). A place's hero is printed, not dealt, and a place always uses `start.mjs brand`.
 
 Deal again only on request or for a stated reason: it contradicts the brand, it needs a missing asset, or the accent is violet (taste bans violet; a violet brand accent is an allowance with its reason).
 
@@ -117,6 +117,14 @@ Use forge's format. Add a `## Design` section in this shape. approve-plan copies
 - Before: .plans/<task>/taste/before · FAIL <n> WARN <n>[ · rubric <n>/10 (app screens)]
 - Gate (page): consistency.mjs exit 0 · check.mjs exit 0 · perf.mjs no FAIL row · at <widths>
 - Gate (app): consistency.mjs app filter (modes/app.md) no FAIL · rubric after ≥ before
+```
+
+The Gate (page) commands. `<w>` are the named widths:
+
+```
+node <taste>/scripts/consistency.mjs <file> --widths <w> --profile <dir> --page <kind> --category "<what is sold>" --primary "<main action>" --out .plans/<task>/taste/<before|after>
+node <taste>/assets/layout/check.mjs --url <file> --profile <dir> --sizes <WxH list> --shots .plans/<task>/taste/<before|after>/layout
+node <taste>/scripts/perf.mjs <file> --profile <dir>
 ```
 
 Acceptance criteria always include the gate line. A criterion only a person or a real device can check is `manual:`.
