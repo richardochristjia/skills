@@ -20,7 +20,7 @@ node <taste>/scripts/consistency.mjs <url or file> --widths <named> --profile <d
 ```
 
 - Read the `checks` in the JSON.
-- Ignore the page rules: ids `cta`, `copy-headline`, `effects-fit`.
+- Ignore the page rules: ids `cta`, `copy-headline`, `effects-fit`, `copy-fact`, `copy-actions`.
 - Any other FAIL fails the gate. WARN does not.
 - Exit 2 means taste could not check. Report it with the reason.
 - The filter was tried on one static page. A real app may raise other page-only ids. Report a FAIL you judge false, with the reason.

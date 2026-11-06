@@ -9,7 +9,7 @@ Redesign, restyle, review-only, polish. The app already exists, so start from wh
    node <taste>/scripts/shoot.mjs --url <url or file.html> --w <width> --out .plans/<task>/taste/before/<screen>-<width>.png --profile <dir>
    ```
    Use the dev server URL or the built page. The final gate runs on the production build.
-2. Run the checker with `--out .plans/<task>/taste/before`. Page: `consistency.mjs` as in SKILL.md. App screen: the app gate in `app.md`. Exit 1 means FAIL findings, not an error: keep the report.
+2. Run the checker with `--out .plans/<task>/taste/before`. Page: `consistency.mjs`, the first command of the Gate block in SKILL.md. App screen: the app gate in `app.md`. Exit 1 means FAIL findings, not an error: keep the report.
 3. Record the counts: `Before: .plans/<task>/taste/before · FAIL <n> WARN <n>`. App screens also get the rubric from `app.md`: `· rubric <n>/10`.
 4. Put the screenshots on the lavish page with the findings pinned to the places they are about.
 
