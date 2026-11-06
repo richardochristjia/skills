@@ -29,6 +29,6 @@ Rows are screens, columns are empty, zero, loading, error, success, no-permissio
 
 ## Per screen
 
-Each screen that changes then runs its own steps from `create.md` (page or app screen), or the review steps in `redesign.md` if it already exists. The flow decides which screens change and in what order. All of them share one sheet and one palette.
+Each screen that changes then runs its own steps from `create.md` (page or app screen), or the review steps in `redesign.md` if it already exists. The flow decides which screens change and in what order. All of them share one Look line.
 
 Acceptance criteria: the gate line for every changed screen, and for each changed step a criterion that names the path (for example "from the start, done in 3 steps, back keeps the input"). A walk on a real device or a real backend is `manual:`.
