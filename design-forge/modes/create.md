@@ -51,7 +51,7 @@ Shell, data, states and the check (§2.4 to §2.8) belong to the build. Do not r
 
 ## Mixed
 
-A page plus the app behind it. Run the page steps. Then run the app steps with `--keep palette,type` and a second `--out` folder (`.plans/<task>/taste/app`), so both share one palette and one type face. Every interface fragment the page shows is built by the app rules.
+A page plus the app behind it. Run the page steps. Then run the app steps with `--keep palette,type` and a second `--out` folder (`.plans/<task>/taste/app`). `--keep` only skips dealing those parts: the agent maps the page palette and face onto the app sheet by hand. List both sheets in Direction. Every interface fragment the page shows is built by the app rules.
 
 ## Component
 
