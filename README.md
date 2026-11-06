@@ -23,7 +23,7 @@ For UI design work (new screens, redesigns, flows, design-system cleanup, native
 The fix step runs on Opus and every other step on Sonnet by default. Change that in the config, or name a model for a step when you approve (for example "build on haiku") and that step uses it. A run
 writes a checkpoint after every step, so an interrupted run resumes instead of
 starting over. Nothing beside the harness you are already in is needed: no
-terminal multiplexer, no separate session. design-forge also needs taste, Node 22+
+terminal multiplexer, no separate session. design-forge also needs taste v2.1.5 (the 2.5 rewrite is not supported yet), Node 22+
 and Chrome.
 
 ## Configuration

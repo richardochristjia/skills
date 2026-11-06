@@ -15,10 +15,10 @@ The visual work uses **taste** (the design-taste-frontend skill). Its commands a
 
 Do this before any question.
 
-- Find `<taste>`: the first of `~/.agents/skills/design-taste-frontend`, `~/.claude/skills/design-taste-frontend`, `<repo>/.claude/skills/design-taste-frontend` that holds `scripts/draw.mjs`.
+- Find `<taste>`: the folder the harness reports when it loads the design-taste-frontend skill (Claude Code shows it as the skill's base directory). If the harness reports none, use the `design-taste-frontend` folder next to this skill's folder.
 - Run `node --version`. Taste needs Node 22 or later.
 - Look for Chrome, Edge or Chromium.
-- Taste or Node missing: say what is missing, print taste's install line, and stop. The line: "Copy the design-taste-frontend folder to `~/.claude/skills/design-taste-frontend/`, or keep it in the repo under `.claude/skills/`."
+- Taste or Node missing: say what is missing, print taste's install line, and stop. Taste found without `scripts/draw.mjs`: say "taste <version from its SKILL.md description> is not supported. design-forge needs taste v2.1.5.", print the install line, and stop. The line: "Clone tag `v2.1.5` of `https://github.com/Leonxlnx/taste-skill` and copy its `skills/taste-skill` folder into the same skills folder as design-forge, named `design-taste-frontend`."
 - Chrome missing: go on with taste's fallback (`lint.mjs` plus the screenshots you can take). Write in the plan that the inspector cannot run.
 - Native work also needs `xcrun simctl` (iOS) and `adb` (Android). Each one missing makes that platform's capture criteria `manual:`, with the reason.
 
