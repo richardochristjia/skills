@@ -74,7 +74,7 @@ What the page shows:
 
 After the user picks a card:
 
-1. Deal the full sheet: `node <taste>/scripts/draw.mjs <same arguments> --direction <id> --out .plans/<task>/taste`.
+1. Deal the full sheet: for a page, `node <taste>/scripts/draw.mjs <same arguments, without --options> --direction <id> --out .plans/<task>/taste`. For an app screen, `node <taste>/scripts/draw.mjs --app --kind <kind> <same arguments, without --options> --style <id> --out .plans/<task>/taste`.
 2. Build only the first screen as static HTML in `.lavish/<task>-mock/index.html`, from the sheet.
 3. Run `node <taste>/scripts/inspect.mjs .lavish/<task>-mock/index.html --widths <named> --out .plans/<task>/taste/mock`.
 4. Show the screenshots on the page.

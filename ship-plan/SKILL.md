@@ -58,6 +58,7 @@ In Claude Code that is the Agent tool's `model` parameter. In another harness it
 The model for each step is its line in `tier.md`'s Steps list. A step missing from that list (or listed under Skipped) is not run: checkpoint it as `status: skipped`.
 
 1.  **Build.** A helper runs the loop from `tier.md`: `/<loop>-loop <plan folder>`. For the phased loop, the helper is that loop's orchestrator, so don't tell it to run solo.
+    - **When `.plans/<task>/design.md` exists,** the build helper also runs taste's build steps from the saved sheet: `draw.mjs --show --out .plans/<task>/taste`, never a new deal. Pages: taste steps 6 to 10, with the look loop of at most 3 rounds. App screens: §2.4 to §2.8. Native: build, then capture and critique. Taste output goes to `.plans/<task>/taste/` (`--out .plans/<task>/taste/after`). Add `.taste-skill/` to `.git/info/exclude` so it is never committed.
 2.  **Context pack.** A helper runs the context-pack skill on the branch and writes `.plans/<task>/context-pack.md`. Every later helper reads that file instead of re-exploring the repository.
 3.  **Review.** One reviewer per turn, **correctness first**, then security, then structure, then tests.
     - **Tier M:** the correctness reviewer only. The others run if it reports a critical finding, or if the user asked for them.
@@ -68,6 +69,7 @@ The model for each step is its line in `tier.md`'s Steps list. A step missing fr
 6.  **Simplify.** A helper runs the `simplify` skill if you have it, then deslop, on the branch's changes, then runs `test`. *Tier L only.*
 7.  **Spec check.** A helper runs gap-analysis on the plan folder, fixes every gap it lists, then runs `check` and `test` until both pass. *Tier L only.*
 8.  **Verify.** A helper runs `check` and `test` **once, at the end**, then lints and formats the files that changed, and fixes until everything passes. Do not run the suite after every phase, and do not run it a second time against another ref to count pre-existing failures — that is a whole extra run for no signal. Type check only when the repo's type-check command actually works: check that it exits cleanly first, and if it is broken, say so and skip it.
+    - **When `design.md` exists,** the gate also runs. Web: `lint.mjs` on the changed source and `inspect.mjs --widths <named widths>` must exit 0, and so must `scenes.mjs` when the sheet dealt scenes. Native: the capture plus the after score must be at least the before score. A FAIL is fixed here like any failing check.
 9.  **Deliver.** A helper delivers the branch as the `DELIVERY:` line of `tier.md` says (see **The delivery step**), using the repo's own tooling if it has any. It returns the link, or `branch <x>, not pushed` for `local`. Then stop every helper still running. **Tier S, M and L.**
 10. **Browser walkthrough.** A helper runs the taste-test skill against the plan folder, using the repo's committed fixture. If there is none, skip it and report "no fixture at `<path>` — run `make-fixture` in this repo". Anything still broken goes to **Needs your call**; don't fix it. *Tier L only.*
 11. **CI status.** A helper reports the CI state of the branch.
@@ -133,6 +135,7 @@ Short, so the user reads all of it. Put these at the top, before the repo's usua
 
 - **Summary:** what changed, at most 5 bullets.
 - **How it was tried:** what the browser walkthrough did and saw, in a few lines, with the pictures it produced, and the commands to try it yourself.
+- **When `design.md` exists,** "How it was tried" also has a before/after table: inspector FAIL and WARN counts per width, and the critique score. Name screenshots by path under `.plans/<task>/taste/`; attaching images is left to the human.
 - **Needs your call:** at most 5 items, worst first. Anything still broken after the walkthrough, checks it couldn't try, fixes held back because they need a new rule, divergences, and open findings worth a look. If there are more, say how many and that they're in the plan folder.
 
 Everything else stays in the plan folder: every divergence note, open and dismissed finding, and the risk list.
