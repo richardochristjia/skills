@@ -1,6 +1,6 @@
 # Create mode
 
-New page, app screen, mixed build, or one component. Commands run as `node <taste>/scripts/<name>.mjs`. Every output goes to `.plans/<task>/taste/` through `--out`.
+New page, app screen, mixed build, or one component. Every output goes to `.plans/<task>/taste/` through `--out`.
 
 Decide page or app screen first and record it. A page is read and scrolled. An app screen is worked in (dashboard, queue, settings, list, editor).
 
@@ -27,10 +27,8 @@ List every picture the page needs and where each comes from:
 
 The inspector fails a page with fewer than 4 real pictures (SVG does not count). Check the count now.
 
-Deal the full sheet only when the user has chosen (tier L: this is the mock step in SKILL.md):
-```
-node <taste>/scripts/draw.mjs <same arguments, without --options> --direction <id> --out .plans/<task>/taste
-```
+The full sheet is dealt only after the user chooses (the mock step in SKILL.md).
+
 Redraw a slot (`--redraw hero|type|palette|photos|scenes|section:<role>|direction`) only for a stated reason: it contradicts the brand, needs a missing asset, or cannot hold the real content. Record each redraw in the Design section.
 
 ## App screen
