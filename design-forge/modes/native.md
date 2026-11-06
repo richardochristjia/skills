@@ -22,10 +22,11 @@ xcrun simctl boot <udid>
 xcrun simctl bootstatus <udid> -b
 <the repo's own build and install command>
 xcrun simctl openurl <udid> <scheme>://<path>
-xcrun simctl io <udid> screenshot .plans/<task>/taste/before/<screen>-<device>.png
+xcrun simctl io <udid> screenshot "$PWD/.plans/<task>/taste/before/<screen>-<device>.png"
 xcrun simctl shutdown <udid>
 ```
 
+- `simctl io` needs an absolute path and an existing folder (a relative path fails): run `mkdir -p .plans/<task>/taste/before` first.
 - Open each screen by deep link. This needs a URL scheme in the app. Without one, that capture is `manual:` with the reason.
 - The state (empty, error, loading) must be reachable by a link or a launch argument. If not, that capture is `manual:`.
 - Android, only when `adb` is installed: `adb exec-out screencap -p > .plans/<task>/taste/before/<screen>-<device>.png`. No `adb`: the Android captures are `manual:`.
