@@ -18,7 +18,7 @@ npx skills update -g                                   # pull the latest later
 2. **approve-plan** turns the approved plan into a spec and a task list, and starts the run.
 3. **ship-plan** runs the pipeline unattended, on a branch, and ends with a pull request link.
 
-For UI design work (new screens, redesigns, flows, design-system cleanup, native apps), start with **design-forge** in place of forge for UI work, following forge's rules. It plans with the same steps and adds a design section that approve-plan and ship-plan carry through.
+For UI design work (new screens, redesigns, flows, design-system cleanup, native apps), start with **design-forge** in place of forge for UI work, following forge's rules. It plans with the same steps and adds a design section that approve-plan and ship-plan carry through. To find why users fail at a flow, run **ux-analysis** first: it is read-only and ends in a fix plan that design-forge or forge takes to approval.
 
 The fix step runs on Opus and every other step on Sonnet by default. Change that in the config, or name a model for a step when you approve (for example "build on haiku") and that step uses it. A run
 writes a checkpoint after every step, so an interrupted run resumes instead of
@@ -95,6 +95,7 @@ Example: change how the auth middleware checks tokens (a sensitive path), or run
 ```
 forge/           plans a change with you before any code is written
 design-forge/    plans UI design work with you, with visual directions and a responsive gate
+ux-analysis/     finds real usability problems in a running UI, proven and anchored, read-only
 approve-plan/    writes the spec and task list, then starts the run
 ship-plan/       the pipeline: build to pull request, unattended
 pick-tier/       decides the depth of a run from the change's size and risk
