@@ -35,13 +35,7 @@ Something that destroys the user's input or work with no way back is 3 or 4. Som
 
 ## Not a finding
 
-Check these before you write one. Each looks like a problem and often isn't.
-
-- Validation shown on blur, or after the user leaves a field, when the message is shown and tied to the field.
-- A spinner or loader that starts after a short delay (a few hundred ms) and does show.
-- Undo offered in a toast, snackbar or banner after a delete, when it stays long enough to reach and the keyboard can reach it.
-
-If the mechanism exists and works in the live UI, drop it. Put it in `dropped.md`, or on the keep list when it is worth protecting.
+A mechanism that looks missing may exist in a later state: after submit, after an error, after a wait, inside a menu, or further down the page. Check those states before you write the finding. If the mechanism exists and works in the live UI, drop it. Put it in `dropped.md`, or on the keep list when it is worth protecting.
 
 ## Banned
 
