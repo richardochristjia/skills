@@ -31,7 +31,7 @@ Walk the steps as a first-time user who knows only the task goal.
 Headless Chrome needs no install:
 
 - Screenshot: `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --screenshot=<out.png> --window-size=1440,900 <url>` (use 390,844 for phone).
-- DOM: add `--dump-dom <url>` and grep it. This is the search every "missing X" claim needs. It shows the first screen only. For later states, use the harness browser tool or read the script.
+- DOM: add `--virtual-time-budget=5000 --dump-dom <url>` and grep it. This is the search every "missing X" claim needs. It shows the first screen only. For later states, use the harness browser tool or read the script.
 
 ## Keyboard walk
 
