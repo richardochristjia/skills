@@ -51,11 +51,12 @@ Applies to every mode.
 
 Read the app. Never edit its source.
 
-- Taste output goes only to `.plans/<task>/taste/`:
-  - `start.mjs`: `--history .plans/<task>/taste/history.json`.
+- Taste output goes only to `.plans/<task>/taste/`. Run taste from the repo root, except `start.mjs deal`:
+  - `start.mjs deal`, from `.plans/<task>/taste/`: `--history history.json`.
+  - `start.mjs css`: `--history .plans/<task>/taste/history.json`.
   - `deal.mjs`: `--history .plans/<task>/taste/layout-history.json`.
   - `consistency.mjs`, `check.mjs`, `shoot.mjs`: `--out` (or `--shots`) `.plans/<task>/taste/<before|mock|after>`.
-- Taste defaults to `.taste-skill/` when you leave these out. Never write it.
+- Taste defaults to `.taste-skill/` in the working directory when you leave these out. Never write it outside `.plans/<task>/taste/`.
 - Choose the task slug here. approve-plan reuses it.
 - Run the steps in the mode file.
 
@@ -64,37 +65,50 @@ Read the app. Never edit its source.
 Load the lavish skill, else run `npx -y lavish-axi --help`. Put the page in `.lavish/`. Never run `lavish-axi share`: shares are public.
 
 - **Tier S:** no page, no dialogue, no deal. A short plan in chat. Tier S has no Verify; Build runs the Gate line after the look loop.
-- **Tier M:** the deal cards and any trade-off question on a page. The plan in chat.
-- **Tier L:** the cards, then the mock (below), then the plan as a page.
+- **Tier M:** the three direction mocks (below) and any trade-off question on a page. The plan in chat.
+- **Tier L:** the three direction mocks, then the plan as a page. After the pick, the picked mock is captured at every named width.
+
+Modes with no deal (polish, review only, component) are unchanged. So are system and flow, unless they deal.
 
 What the page shows:
 - Before screenshots with findings pinned.
-- The deal cards (see Look source): 3 palettes with swatches, 3 type pairings with a specimen. The recommended ones are marked.
+- The three direction mocks of the key screen (see The directions): screenshots at the desktop and phone widths, the self-check table from [references/directions.md](references/directions.md), and the adoption count. The recommended direction is marked.
 - The idea sentence and the competitor test.
 - The flow map and the state table, when the mode makes them.
 - Questions as lettered options, the recommended one marked.
 
 ### Look source
 
-Take the first that fits:
+Take the first that fits. Details of the policy: [references/directions.md](references/directions.md).
 
-1. **System.** The repo declares tokens (CSS custom properties, a Tailwind theme, token files): keep them. No deal. `Look: system`.
-2. **Brand.** The user gives brand colours, and maybe fonts: `node <taste>/scripts/start.mjs brand --page <kind> --bg ".." --ink ".." --accent ".." --type <id> --radius soft`. A font outside taste's ids: take the nearest id from `start.mjs types --page <kind>`, then swap the `--font-display` and `--font-text` lines by hand. Log the swap as an allowance.
-3. **Deal.** `node <taste>/scripts/start.mjs deal --page <kind> --history <file>` gives 3 palettes and 3 type pairings. Show them as cards on the lavish page. The user picks one of each. Then `start.mjs css --page <kind> --palette <id> --type <id> --radius sharp|soft|round --history <file>` prints the tokens. A page also runs `node <taste>/assets/layout/deal.mjs --type <software|product|place|service> --has <photo,ui,object,film> --history <file>` for the hero. Hardware: `--type product --kind tech`. A game: `--type software --kind gaming`, and `--has` must name what the brief has (`film` or `photo`). A place's hero is printed, not dealt, and a place always uses `start.mjs brand`.
+1. **Adoption test.** Count the app's screens. At least 5, and at least 90% of them take colours and fonts from tokens or shared components: the system is fully adopted. **Locked.** `Look: system`, no deal, all three directions stay inside it. State the count on the page; the user can overrule it.
+2. **Tokens present, not fully adopted.** Direction A keeps them (`Look: system`). B and C deal (`Look: deal`). If the user picks B or C, the plan's phases say the tokens are replaced.
+3. **Brand.** The user gives brand colours, and maybe fonts, or says the brand is locked (then treat it as step 1): `node <taste>/scripts/start.mjs brand --page <kind> --bg ".." --ink ".." --accent ".." --type <id> --radius soft`. A font outside taste's ids: take the nearest id from `start.mjs types --page <kind>`, then swap the `--font-display` and `--font-text` lines by hand. Log the swap as an allowance.
+4. **Deal.** `node <taste>/scripts/start.mjs deal --page <kind> --history <file>` gives 3 palettes and 3 type pairings. Pair them into three directions; the user picks a direction. Then `start.mjs css --page <kind> --palette <id> --type <id> --radius sharp|soft|round --history <file>` prints the tokens. A page also runs `node <taste>/assets/layout/deal.mjs --type <software|product|place|service> --has <photo,ui,object,film> --history <file>` for the hero. Hardware: `--type product --kind tech`. A game: `--type software --kind gaming`, and `--has` must name what the brief has (`film` or `photo`). A place's hero is printed, not dealt, and a place always uses `start.mjs brand`.
+
+Run `start.mjs deal` with the working directory set to `.plans/<task>/taste/` and `--history history.json`. It writes `.taste-skill/build.json` in the working directory whatever `--history` says. Run `css` and every other command from the repo root with `--history .plans/<task>/taste/...`, even though `deal`'s `then:` line prints `--history history.json`.
 
 Deal again only on request or for a stated reason: it contradicts the brand, it needs a missing asset, or the accent is violet (taste bans violet; a violet brand accent is an allowance with its reason).
 
 A brand-new site takes taste's starter kit (`<taste>/assets` into the project, plus `starter.html`). An existing app takes only the `:root` tokens and font links, mapped into its own styling. Copy no kit into it.
 
-### The mock (tier L)
+### The directions (tier M and L)
 
-After the user picks:
+Before the user picks, build three mocks of the one key screen, with real content. Follow [references/directions.md](references/directions.md) for the bundle, the representation table and the difference rule. Mocks live in `.lavish/<task>-mock/<a|b|c>/`.
 
-1. Pages: build the first screen from the kit's `starter.html` and the dealt hero into `.lavish/<task>-mock/`. Copy `<taste>/assets` beside it (lavish serves relative paths only). App screens: build it as static HTML from the tokens.
-2. Capture it: `node <taste>/scripts/shoot.mjs --url .lavish/<task>-mock/index.html --w <width> --out .plans/<task>/taste/mock/<width>.png --profile <dir>`, once per named width.
-3. Show the screenshots on the page.
+1. Pages: build the first screen from the kit's `starter.html` and the dealt hero. Copy `<taste>/assets` beside each mock (lavish serves relative paths only). App screens: static HTML from the tokens.
+2. From the repo root, print each mock's tokens with `start.mjs css --history .plans/<task>/taste/mock-history.json`. After the pick, run it once more with `--history .plans/<task>/taste/history.json`.
+3. **Tidy gate**, on every mock before the user sees it:
+   1. Copy `assets/mock-base.css` (this skill) beside the mock. Link it first.
+   2. One class per repeated component. Each repeating slot holds its longest real value.
+   3. `node <this skill>/scripts/mock-lint.mjs .lavish/<task>-mock/<a|b|c>`. Exit 1 is a FAIL.
+   4. `node <taste>/scripts/consistency.mjs <mock>/index.html --widths <desktop>,<phone> --profile <dir> --no-rhythm --no-tiles --no-visuals --no-address --json --out .plans/<task>/taste/mock/<a|b|c>`. Exit 1 is normal. Read `checks`: only `cut-text`, `overlap-text`, `collide` and `off-viewport` block.
+   5. At most 3 fix rounds. A mock still failing is shown with the failure labelled.
+   6. No Chrome: lint still runs, and the mock is labelled "layout not checked".
+4. Capture each mock at the desktop and phone widths: `node <taste>/scripts/shoot.mjs --url <mock>/index.html --w <width> --out .plans/<task>/taste/mock/<a|b|c>/<width>.png --profile <dir>`. Copy the PNGs beside the lavish page and show them with the self-check table.
+5. After the pick, tier L captures the picked mock at every named width.
 
-The mock is throwaway. It never becomes app code.
+The mocks are throwaway. They never become app code.
 
 ## 6. The plan
 
@@ -105,6 +119,8 @@ Use forge's format. Add a `## Design` section in this shape. approve-plan copies
 - Plan folder: .plans/<task>/
 - Mode: <mode>[ + native] · kind: page|app|mixed|component
 - Look: system|brand|deal · kind <kind> · palette <id> · type <id> · radius <r> · hero <id> (pages) · font swap <face> (or none) · history .plans/<task>/taste/
+- Direction: <name> · <one line>
+- Representation: <datum: form>…
 - Allowances: <check id — reason>… (or none)
 - Idea: On this page, <thing of the subject> becomes <device>. Live thing: <…>
 - Argument and copy outline: <one claim per section; headlines ≤ 2 lines; sample content flagged>
