@@ -23,8 +23,8 @@ Use the look-source rule in SKILL.md (system or brand) and record it in the Look
 
 ## Variants
 
-- **Redesign:** deal the look by the rule, and rebuild the sections inside the existing components.
-- **Restyle:** keep the layout. Take type, colour and components from the Look.
+- **Redesign:** three directions by the rule (see [../references/directions.md](../references/directions.md)), and rebuild the sections inside the existing components.
+- **Restyle:** keep the layout. Three directions by the rule; take type, colour and components from the picked one.
 - **Review only:** stop after the counts, the screenshots and the three changes that would move the page most. No cards, no mock, no build plan. Say it is a review. Offer a redesign as a next step.
 - **Polish:** no deal. Add the missing states and decide the phone layout, per `app.md` (app screens) or taste `references/layout-v4.md` (pages). Make no other change.
 
@@ -35,6 +35,6 @@ The plan's phases follow this order, biggest effect for least risk:
 2. Colour: one ground, one ink, one accent.
 3. Frame: margins, section rhythm, a title on the first screen, a heading on every section.
 4. States: hover, focus, loading, empty, error.
-5. Stock components (icon cards, pill badges, gradient blobs, card grids) replaced by the sections the plan names.
+5. Stock components (icon cards, pill badges, gradient blobs, card grids) replaced by the sections the plan names. Stock icon cards stay banned. A graphic that passes the removal test is allowed.
 
 Acceptance criteria: the gate line, plus "every route, form and menu that worked before still works" and the after FAIL count at or below the before count (app screens: the after rubric at or above the before rubric).

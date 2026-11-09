@@ -12,6 +12,7 @@ Shared by create, redesign, system and native. Not a mode. Rules for app screens
 - **Touch targets** are at least 44px on phone widths.
 - **Phone layout.** Per screen, say what stacks and what hides behind a menu.
 - **One system.** One button pair, one card style, one type scale.
+- **Representation.** For each key datum fill the representation table in [../references/directions.md](../references/directions.md): current form, and the form per direction. Graphics obey the removal test: delete it, and if nothing is lost it goes.
 
 ## The app gate
 

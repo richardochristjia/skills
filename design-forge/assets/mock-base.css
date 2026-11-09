@@ -1,0 +1,11 @@
+/* Link first in every mock. Spacing steps match taste's --s-1 to --s-10. */
+:root {
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+:where(*) { min-width: 0; }
+:where(p, h1, h2, h3, h4, h5, h6, li, dd, dt, label, span, a, button) { overflow-wrap: break-word; }
+:where(td, th) { overflow-wrap: anywhere; }
+:where(h1, h2, h3, h4, h5, h6) { text-wrap: balance; }
+img, svg { max-width: 100%; height: auto; }
