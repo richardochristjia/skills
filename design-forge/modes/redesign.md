@@ -25,7 +25,7 @@ Use the look-source rule in SKILL.md (system or brand) and record it in the Look
 
 - **Redesign:** three directions by the rule (see [../references/directions.md](../references/directions.md)), and rebuild the sections inside the existing components.
 - **Restyle:** keep the layout. Three directions by the rule; take type, colour and components from the picked one.
-- **Review only:** stop after the counts, the screenshots and the three changes that would move the page most. No cards, no mock, no build plan. Say it is a review. Offer a redesign as a next step.
+- **Review only:** stop after the counts, the screenshots and the three changes that would move the page most. No cards, no mock, no build plan. Say it is a review. Offer a redesign as a next step. Usability analysis (does it work for users, why they fail) goes to ux-analysis.
 - **Polish:** no deal. Add the missing states and decide the phone layout, per `app.md` (app screens) or taste `references/layout-v4.md` (pages). Make no other change.
 
 ## Order of work
