@@ -51,11 +51,12 @@ Applies to every mode.
 
 Read the app. Never edit its source.
 
-- Taste output goes only to `.plans/<task>/taste/`:
-  - `start.mjs`: `--history .plans/<task>/taste/history.json`.
+- Taste output goes only to `.plans/<task>/taste/`. Run taste from the repo root, except `start.mjs deal`:
+  - `start.mjs deal`, from `.plans/<task>/taste/`: `--history history.json`.
+  - `start.mjs css`: `--history .plans/<task>/taste/history.json`.
   - `deal.mjs`: `--history .plans/<task>/taste/layout-history.json`.
   - `consistency.mjs`, `check.mjs`, `shoot.mjs`: `--out` (or `--shots`) `.plans/<task>/taste/<before|mock|after>`.
-- Taste defaults to `.taste-skill/` when you leave these out. Never write it.
+- Taste defaults to `.taste-skill/` in the working directory when you leave these out. Never write it outside `.plans/<task>/taste/`.
 - Choose the task slug here. approve-plan reuses it.
 - Run the steps in the mode file.
 
@@ -85,7 +86,7 @@ Take the first that fits. Details of the policy: [references/directions.md](refe
 3. **Brand.** The user gives brand colours, and maybe fonts, or says the brand is locked (then treat it as step 1): `node <taste>/scripts/start.mjs brand --page <kind> --bg ".." --ink ".." --accent ".." --type <id> --radius soft`. A font outside taste's ids: take the nearest id from `start.mjs types --page <kind>`, then swap the `--font-display` and `--font-text` lines by hand. Log the swap as an allowance.
 4. **Deal.** `node <taste>/scripts/start.mjs deal --page <kind> --history <file>` gives 3 palettes and 3 type pairings. Pair them into three directions; the user picks a direction. Then `start.mjs css --page <kind> --palette <id> --type <id> --radius sharp|soft|round --history <file>` prints the tokens. A page also runs `node <taste>/assets/layout/deal.mjs --type <software|product|place|service> --has <photo,ui,object,film> --history <file>` for the hero. Hardware: `--type product --kind tech`. A game: `--type software --kind gaming`, and `--has` must name what the brief has (`film` or `photo`). A place's hero is printed, not dealt, and a place always uses `start.mjs brand`.
 
-Run `start.mjs` with the working directory set to `.plans/<task>/taste/`. `deal` writes `.taste-skill/build.json` in the working directory whatever `--history` says, so pass `--history` paths that are correct from that folder.
+Run `start.mjs deal` with the working directory set to `.plans/<task>/taste/` and `--history history.json`. It writes `.taste-skill/build.json` in the working directory whatever `--history` says. Run `css` and every other command from the repo root with `--history .plans/<task>/taste/...`, even though `deal`'s `then:` line prints `--history history.json`.
 
 Deal again only on request or for a stated reason: it contradicts the brand, it needs a missing asset, or the accent is violet (taste bans violet; a violet brand accent is an allowance with its reason).
 
@@ -96,7 +97,7 @@ A brand-new site takes taste's starter kit (`<taste>/assets` into the project, p
 Before the user picks, build three mocks of the one key screen, with real content. Follow [references/directions.md](references/directions.md) for the bundle, the representation table and the difference rule. Mocks live in `.lavish/<task>-mock/<a|b|c>/`.
 
 1. Pages: build the first screen from the kit's `starter.html` and the dealt hero. Copy `<taste>/assets` beside each mock (lavish serves relative paths only). App screens: static HTML from the tokens.
-2. Print each mock's tokens with `start.mjs css --history .plans/<task>/taste/mock-history.json`. After the pick, run it once more with the real `history.json`.
+2. From the repo root, print each mock's tokens with `start.mjs css --history .plans/<task>/taste/mock-history.json`. After the pick, run it once more with `--history .plans/<task>/taste/history.json`.
 3. **Tidy gate**, on every mock before the user sees it:
    1. Copy `assets/mock-base.css` (this skill) beside the mock. Link it first.
    2. One class per repeated component. Each repeating slot holds its longest real value.

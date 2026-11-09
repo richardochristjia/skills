@@ -13,7 +13,7 @@ Decided in Look source (SKILL.md).
 
 ## Dealing
 
-`start.mjs deal` gives 3 palettes and 3 type pairings. Pair them into directions. The user picks a direction, not one of each. Print each mock's tokens with `start.mjs css --history .plans/<task>/taste/mock-history.json`. After the pick, run it once more with the real `history.json`.
+`start.mjs deal`, run from `.plans/<task>/taste/` with `--history history.json`, gives 3 palettes and 3 type pairings. Pair them into directions. The user picks a direction, not one of each. From the repo root, print each mock's tokens with `start.mjs css --history .plans/<task>/taste/mock-history.json`. After the pick, run it once more with `--history .plans/<task>/taste/history.json`.
 
 ## Representation table
 
