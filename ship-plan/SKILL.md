@@ -25,6 +25,8 @@ Your context is for decisions, not file contents. Run every step below in a fres
 - **A helper that has reported is done.** If it's still running (in the background, in a pane, in a session you started), stop it.
 - **Helpers may start their own helpers** when their skill says so, like interrogate's reviewers or the phased loop's per-phase agents.
 - **If you have no subagent tool,** run the step yourself.
+- **When you were started as a helper** (by approve-plan), you are still the orchestrator: every rule in this section applies, your helpers are subagents of yours, and step 12's report is what you return to your caller.
+- **After a compaction, or whenever you are unsure of the state,** re-read `tier.md`, `run-state.md` and `tasks.md` before the next step. The files are the state; your memory of the run is not.
 
 ## The tier decides the steps
 

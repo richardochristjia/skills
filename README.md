@@ -15,8 +15,8 @@ npx skills update -g                                   # pull the latest later
 ## How a change flows
 
 1. **forge** plans the change with you and presents a short plan.
-2. **approve-plan** turns the approved plan into a spec and a task list, and starts the run.
-3. **ship-plan** runs the pipeline unattended, on a branch, and ends with a pull request link.
+2. **approve-plan** turns the approved plan into a spec and a task list, and starts the run in a fresh helper.
+3. **ship-plan** runs the pipeline unattended in that helper, on a branch, and the chat gets the final report with the pull request link.
 
 For UI design work (new screens, redesigns, flows, design-system cleanup, native apps), start with **design-forge** in place of forge for UI work, following forge's rules. It plans with the same steps and adds a design section that approve-plan and ship-plan carry through. To find why users fail at a flow, run **ux-analysis** first: it is read-only and ends in a fix plan that design-forge or forge takes to approval.
 

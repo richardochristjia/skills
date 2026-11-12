@@ -20,7 +20,7 @@ Eight cold-start agents re-reading the same seven files cost 39.5M cache-read to
    git diff "$BASE"...HEAD
    ```
 
-   Drop lockfiles, generated output and vendored directories. If the diff alone is over the budget, split it by file group and say which group is where.
+   Drop lockfiles, generated output and vendored directories. If the pack goes over the budget, apply the word-count rule in Rules.
 
 2. **The files it touches**, one line each: path, what the file is, and its role in the change. No file bodies.
 
@@ -73,10 +73,11 @@ CHANGED: 7 files, +283/-32
 
 ## Rules
 
-- **Budget: 3,000 tokens** (about 2,200 words). If it does not fit, cut prose before cutting the diff, and cut the diff by file group before dropping anything.
+- **Budget: 3,000 tokens** (about 2,200 words). Before reporting, count the pack: `wc -w .plans/<task>/context-pack.md`.
+- Over **2,200** words: cut prose first. Still over: take the diff out of the pack. The `## Diff` section then holds one line per file group (the group's files and the command that prints its diff, `git diff "$BASE"...HEAD -- <paths>`) and a first line saying the diff is not inline. Every other section stays.
 - Every claim carries a `file:line` anchor, so a reviewer can open exactly one place.
 - No file bodies. If a reviewer needs more, they open that file — the pack's job is to say where, not to replace the file.
 - The pack states the diff, the change's intent and the criteria. It does not argue that the change is correct; that is the reviewer's job.
 - Write it once per change. If the branch moves, rewrite it rather than patching it.
 
-Report one line: `Context pack: <path> (<n> words)`.
+Report one line: `Context pack: <path> (<n> words)`, adding `diff not inline` when the diff left the pack.
