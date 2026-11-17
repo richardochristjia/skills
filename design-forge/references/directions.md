@@ -6,7 +6,7 @@ A direction is a bundle: styling (palette, type, radius, surface, density) plus 
 
 Decided in Look source (SKILL.md).
 
-- **Fully adopted system: locked.** At least 5 screens, and at least 90% of them take colours and fonts from tokens or shared components. The lavish page states the count; the user can overrule it. All three directions stay strictly inside the system: only representation, density and existing surface styles vary. New graphics use its tokens and its own icon set.
+- **Fully adopted system: locked.** At least 5 screens, and at least 90% of them take colours and fonts from tokens or shared components. The lavish page states the count; the user can overrule it. All three directions stay strictly inside the system (type roles, spacing and components map as in [foundations.md](foundations.md#locked-system)): only representation, density and existing surface styles vary. New graphics use its tokens and its own icon set.
 - **Tokens present, not fully adopted:** direction A keeps them (`Look: system`). B and C explore (`Look: deal`). If the user picks B or C, the plan's phases say the tokens are replaced.
 - **User says the brand is locked:** same as fully adopted.
 - **No tokens:** all three explore.

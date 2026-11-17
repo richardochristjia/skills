@@ -34,7 +34,7 @@ xcrun simctl shutdown <udid>
 
 ## Score
 
-Score the screenshots with the `app.md` rubric. Record `Before: .plans/<task>/taste/before · rubric <n>/10`.
+Score the screenshots with the `app.md` rubric. Record `Before: .plans/<task>/taste/before · rubric <n>/14`.
 
 ## Criteria
 

@@ -92,6 +92,10 @@ Deal again only on request or for a stated reason: it contradicts the brand, it 
 
 A brand-new site takes taste's starter kit (`<taste>/assets` into the project, plus `starter.html`). An existing app takes only the `:root` tokens and font links, mapped into its own styling. Copy no kit into it.
 
+### Foundations (app screens)
+
+Before the directions, app screens (create and redesign app paths, the app part of mixed, component) run the stages in [references/foundations.md](references/foundations.md): Hierarchy, Type roles, Spacing map, Components. Each writes its line into the Design block. A locked system maps its own scale, spacing and components; a missing role is an allowance. Pages skip this step.
+
 ### The directions (tier M and L)
 
 Before the user picks, build three mocks of the one key screen, with real content. Follow [references/directions.md](references/directions.md) for the bundle, the representation table and the difference rule. Mocks live in `.lavish/<task>-mock/<a|b|c>/`.
@@ -100,8 +104,8 @@ Before the user picks, build three mocks of the one key screen, with real conten
 2. From the repo root, print each mock's tokens with `start.mjs css --history .plans/<task>/taste/mock-history.json`. After the pick, run it once more with `--history .plans/<task>/taste/history.json`.
 3. **Tidy gate**, on every mock before the user sees it:
    1. Copy `assets/mock-base.css` (this skill) beside the mock. Link it first.
-   2. One class per repeated component. Each repeating slot holds its longest real value.
-   3. `node <this skill>/scripts/mock-lint.mjs .lavish/<task>-mock/<a|b|c>`. Exit 1 is a FAIL.
+   2. One class per repeated component, each a row in the components inventory (app screens). Each repeating slot holds its longest real value.
+   3. `node <this skill>/scripts/mock-lint.mjs .lavish/<task>-mock/<a|b|c> --components .plans/<task>/taste/components.md` (app screens; add `--sizes <repo sizes>` when locked). Exit 1 is a FAIL.
    4. `node <taste>/scripts/consistency.mjs <mock>/index.html --widths <desktop>,<phone> --profile <dir> --no-rhythm --no-tiles --no-visuals --no-address --json --out .plans/<task>/taste/mock/<a|b|c>`. Exit 1 is normal. Read `checks`: only `cut-text`, `overlap-text`, `collide` and `off-viewport` block.
    5. At most 3 fix rounds. A mock still failing is shown with the failure labelled.
    6. No Chrome: lint still runs, and the mock is labelled "layout not checked".
@@ -121,6 +125,10 @@ Use forge's format. Add a `## Design` section in this shape. approve-plan copies
 - Look: system|brand|deal · kind <kind> · palette <id> · type <id> · radius <r> · hero <id> (pages) · font swap <face> (or none) · history .plans/<task>/taste/
 - Direction: <name> · <one line>
 - Representation: <datum: form>…
+- Hierarchy: <screen: L1 · L2 · L3> (app screens; n/a for pages)
+- Type roles: <L1/L2/L3 → role and weight> (n/a for pages)
+- Spacing map: <relationship → --s-* step> (n/a for pages)
+- Components: .plans/<task>/taste/components.md (n/a for pages)
 - Allowances: <check id — reason>… (or none)
 - Idea: On this page, <thing of the subject> becomes <device>. Live thing: <…>
 - Argument and copy outline: <one claim per section; headlines ≤ 2 lines; sample content flagged>
@@ -130,7 +138,7 @@ Use forge's format. Add a `## Design` section in this shape. approve-plan copies
 - Flow map: <current → proposed steps, or "n/a">
 - States: <screen × empty|zero|loading|error|success|no-permission table>
 - Tokens (system mode): .plans/<task>/taste/tokens.md
-- Before: .plans/<task>/taste/before · FAIL <n> WARN <n>[ · rubric <n>/10 (app screens)]
+- Before: .plans/<task>/taste/before · FAIL <n> WARN <n>[ · rubric <n>/14 (app screens)]
 - Gate (page): consistency.mjs exit 0 · check.mjs exit 0 · perf.mjs no FAIL row · at <widths>
 - Gate (app): consistency.mjs app filter (modes/app.md) no FAIL · rubric after ≥ before
 ```

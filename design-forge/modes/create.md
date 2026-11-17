@@ -23,10 +23,11 @@ Rules are in `app.md`.
 
 1. **Inventory.** The data the screen shows and the jobs people do on it.
 2. **The one question.** One line.
-3. **The look**, by the look-source rule in SKILL.md, with `--page software`.
-4. **Representation table.** As in `app.md`.
-5. **State table.** As in `app.md`.
-6. **Phone layout** per screen.
+3. **Hierarchy, Type roles, Spacing map, Components.** The stages in [../references/foundations.md](../references/foundations.md), each into its Design line.
+4. **The look**, by the look-source rule in SKILL.md, with `--page software`.
+5. **Representation table.** As in `app.md`.
+6. **State table.** As in `app.md`.
+7. **Phone layout** per screen.
 
 ## Mixed
 
@@ -34,4 +35,4 @@ A page plus the app behind it, one Look for both. The page runs the page steps. 
 
 ## Component
 
-No deal. Read the neighbours: tokens, type, radii, states. Match them. List the component's states (default, hover, focus, active, disabled, loading, error). The app gate in `app.md` still runs on it.
+No deal. Read the neighbours: tokens, type, radii, states. Match them. Add its row to the components inventory ([../references/foundations.md](../references/foundations.md)). List the component's states (default, hover, focus, active, disabled, loading, error). The app gate in `app.md` still runs on it.
