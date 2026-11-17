@@ -105,7 +105,7 @@ Before the user picks, build three mocks of the one key screen, with real conten
 3. **Tidy gate**, on every mock before the user sees it:
    1. Copy `assets/mock-base.css` (this skill) beside the mock. Link it first.
    2. One class per repeated component, each a row in the components inventory (app screens). Each repeating slot holds its longest real value.
-   3. `node <this skill>/scripts/mock-lint.mjs .lavish/<task>-mock/<a|b|c> --components .plans/<task>/taste/components.md` (app screens; add `--sizes <repo sizes>` when locked). Exit 1 is a FAIL.
+   3. `node <this skill>/scripts/mock-lint.mjs .lavish/<task>-mock/<a|b|c>`. App-screen mocks only: add `--components .plans/<task>/taste/components.md`, and `--sizes <repo sizes>` when locked. Never pass either for a page. Exit 1 is a FAIL.
    4. `node <taste>/scripts/consistency.mjs <mock>/index.html --widths <desktop>,<phone> --profile <dir> --no-rhythm --no-tiles --no-visuals --no-address --json --out .plans/<task>/taste/mock/<a|b|c>`. Exit 1 is normal. Read `checks`: only `cut-text`, `overlap-text`, `collide` and `off-viewport` block.
    5. At most 3 fix rounds. A mock still failing is shown with the failure labelled.
    6. No Chrome: lint still runs, and the mock is labelled "layout not checked".

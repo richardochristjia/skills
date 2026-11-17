@@ -23,7 +23,7 @@ Rules are in `app.md`.
 
 1. **Inventory.** The data the screen shows and the jobs people do on it.
 2. **The one question.** One line.
-3. **Hierarchy, Type roles, Spacing map, Components.** The stages in [../references/foundations.md](../references/foundations.md), each into its Design line.
+3. **Hierarchy, Type roles, Spacing map, Components.** The stages in [../references/foundations.md](../references/foundations.md), each into its Design line. Run the adoption test (SKILL.md Look source step 1) first; a locked system changes what these stages read.
 4. **The look**, by the look-source rule in SKILL.md, with `--page software`.
 5. **Representation table.** As in `app.md`.
 6. **State table.** As in `app.md`.
