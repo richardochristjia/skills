@@ -10,8 +10,10 @@ Redesign, restyle, review-only, polish. The app already exists, so start from wh
    ```
    Use the dev server URL or the built page. The final gate runs on the production build.
 2. Run the checker with `--out .plans/<task>/taste/before`. Page: `consistency.mjs`, the first command of the Gate block in SKILL.md. App screen: the app gate in `app.md`. Exit 1 means FAIL findings, not an error: keep the report.
-3. Record the counts: `Before: .plans/<task>/taste/before · FAIL <n> WARN <n>`. App screens also get the rubric from `app.md`: `· rubric <n>/10`.
+3. Record the counts: `Before: .plans/<task>/taste/before · FAIL <n> WARN <n>`. App screens also get the rubric from `app.md`: `· rubric <n>/14`.
 4. Put the screenshots on the lavish page with the findings pinned to the places they are about.
+
+App-screen redesign and restyle run the stages in [../references/foundations.md](../references/foundations.md) (Hierarchy, Type roles, Spacing map, Components) before the directions.
 
 ## What must survive
 
@@ -31,7 +33,7 @@ Use the look-source rule in SKILL.md (system or brand) and record it in the Look
 ## Order of work
 
 The plan's phases follow this order, biggest effect for least risk:
-1. Type: faces and scale.
+1. Type: faces and the type roles.
 2. Colour: one ground, one ink, one accent.
 3. Frame: margins, section rhythm, a title on the first screen, a heading on every section.
 4. States: hover, focus, loading, empty, error.

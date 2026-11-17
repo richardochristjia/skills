@@ -2,6 +2,10 @@
 :root {
   --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px;
   --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+  /* Type sizes match references/foundations.md. */
+  --t-caption: 12px; --t-label: 13px; --t-body: 14px; --t-body-lg: 16px;
+  --t-title: 20px; --t-heading: 24px; --t-display: 32px;
+  --lh-tight: 1.25; --lh-body: 1.5;
 }
 *, *::before, *::after { box-sizing: border-box; }
 :where(*) { min-width: 0; }

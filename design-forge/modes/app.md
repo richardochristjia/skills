@@ -11,7 +11,7 @@ Shared by create, redesign, system and native. Not a mode. Rules for app screens
 - **Density.** Tables and lists sit on one grid. Align columns.
 - **Touch targets** are at least 44px on phone widths.
 - **Phone layout.** Per screen, say what stacks and what hides behind a menu.
-- **One system.** One button pair, one card style, one type scale.
+- **One system.** One button pair, one card style, one type scale. Hierarchy, type roles, spacing map and components follow [../references/foundations.md](../references/foundations.md).
 - **Representation.** For each key datum fill the representation table in [../references/directions.md](../references/directions.md): current form, and the form per direction. Graphics obey the removal test: delete it, and if nothing is lost it goes.
 
 ## The app gate
@@ -28,13 +28,15 @@ node <taste>/scripts/consistency.mjs <url or file> --widths <named> --profile <d
 
 ## The rubric
 
-Score each question 0, 1 or 2. Total is out of 10.
+Score each question 0, 1 or 2. Total is out of 14.
 
 1. The one question is answered first.
 2. One system: buttons, cards, type scale.
 3. States are covered.
 4. The phone layout works.
 5. Contrast and touch targets hold.
+6. Squint test: blurred, the L1 still wins.
+7. Greyscale test: meaning survives without colour.
 
 Score the `shoot.mjs` screenshots, before and after:
 
