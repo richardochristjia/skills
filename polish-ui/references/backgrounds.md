@@ -92,7 +92,7 @@ function draw(t) {
     ctx.stroke();
   }
 }
-if (matchMedia('(prefers-reduced-motion: reduce)').matches) { draw(2.4); }   // one still frame, no loop
+if (matchMedia('(prefers-reduced-motion: reduce)').matches) { draw(2.4); addEventListener('resize', function () { draw(2.4); }); }   // one still frame, no loop; resize clears the canvas, so redraw
 else {
   var t0 = performance.now(), last = 0;
   (function frame(now) {
@@ -114,7 +114,7 @@ A bar waveform across the middle, pulsing at 120 bpm (one beat is 0.5 s), a glow
       <rect x="0" y="92" width="6" height="16" rx="3"/><rect x="12" y="77" width="6" height="46" rx="3"/>
       <!-- ...one rect per 12 units across 1440, heights hand-varied around y=100 (about 120 bars) -->
     </svg></div>
-    <div class="played"><div><svg><!-- the same bars again --></svg></div></div>
+    <div class="played"><div><svg><!-- the same svg again: same viewBox, preserveAspectRatio and rects --></svg></div></div>
   </div>
   <div class="head"></div>
 </div></div>
@@ -138,7 +138,7 @@ A bar waveform across the middle, pulsing at 120 bpm (one beat is 0.5 s), a glow
 @keyframes head{to{transform:translateX(100vw)}}
 ```
 
-The played bars reveal by sliding a clipping box, not by animating width or clip-path. About 240 static rects, only 5 animated nodes.
+The played bars reveal by sliding a clipping box, not by animating width or clip-path. About 240 static rects, only 4 animated nodes.
 
 390 rule: the band moves to the bottom, where the form does not cover it.
 
