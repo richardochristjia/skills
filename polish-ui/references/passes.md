@@ -52,6 +52,7 @@ Targets come from the chosen recipe in `recipes.md`. Nothing is checked between 
 - **Change:** apply the recipe's image treatment only (recipe 1: full-bleed with a dark overlay). Text over a picture needs contrast.
 - **Check:** the finish gate shows no FAIL, contrast included.
 - **Taste refs:** `<taste>/references/photos.md`.
+- **Login/register:** a plain ground goes to the Background step in `SKILL.md` (section 5.5).
 
 ## Moments
 
@@ -66,3 +67,4 @@ Pick 2 or 3 for the page, the recipe's moments first, then from `<taste>/referen
 - Every hover moment has a tap, focus or scroll version: a hover preview becomes a menu sheet or a tap; hover zoom only under `@media (hover:hover)`, a swipe gallery otherwise.
 - `prefers-reduced-motion: reduce` shows the end state.
 - Check: covered by the finish gate (`<taste>/references/gate.md` lists the motion and performance checks).
+- On login/register, the background loop is the rich component.
