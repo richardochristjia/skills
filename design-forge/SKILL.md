@@ -30,7 +30,7 @@ State the mode in one line with the reason. Then read only that mode's file.
 | Signal in the request | Mode | File |
 |---|---|---|
 | New page, landing, site, hero; new dashboard, settings, queue, screen; one component | create | [modes/create.md](modes/create.md) |
-| Redesign, restyle, "looks dated" or "AI-made", review or audit a page, missing states, fix mobile | redesign | [modes/redesign.md](modes/redesign.md) |
+| Redesign, restyle, "looks dated", review or audit a page, missing states, fix mobile | redesign | [modes/redesign.md](modes/redesign.md) |
 | Steps, clicks, funnel, onboarding, checkout, drop-off, a journey across screens | flow | [modes/flow.md](modes/flow.md) |
 | Tokens, colours or sizes everywhere, tidy the design system, export to Figma | system | [modes/system.md](modes/system.md) |
 | `*.xcodeproj`, `Package.swift`, `pubspec.yaml`, React Native (`app.json` and `react-native`), or the user names iOS or Android | native, with one mode above | [modes/native.md](modes/native.md) |
