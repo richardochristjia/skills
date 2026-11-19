@@ -43,3 +43,72 @@ polish-ui picks one recipe after the before shots and states it in one line with
 - **Targets:** full-width headline of at most 3 lines, one CTA, then a full-width photo band directly under it with no box.
 - **Per pass:** Imagery turns the picture into the band. Alignment puts the headline on the nav's left edge.
 - **Moments:** band reveal on scroll, a CTA arrow shift.
+
+# Page recipes
+
+polish-ui names the page type after the before shots, from what the main content holds, and states it in one line with why. A page recipe adds section order, targets and tells on top of the hero recipe it names (the hero recipe is picked by the pick rule above, or fixed here). Section ids are taste's (`<taste>/references/sections-library.md`).
+
+## Page type signals
+
+- A plan or price table: pricing.
+- A password field: login/register.
+- Long single-column text with a byline or `<article>`: article.
+- A price with a buy, reserve or add-to-cart action on one item: product detail.
+- An address or contact form as the main content: contact.
+- A team, founder or history page: about.
+- Anything else: landing.
+
+## Landing
+
+- **Hero recipe:** by the pick rule, unchanged (recipe 1 for a strong photo).
+- **Sections:** taste's plan for the kind (`<taste>/references/sections.md`).
+- **Signature:** the best fit of the others' options, or none.
+
+## Pricing
+
+- **Hero recipe:** 3.
+- **Sections:** `pricing-three` or `pricing-two`, `comparison-table`, `faq`, `close-type`.
+- **Targets:** at most 3 plans, at most one highlighted (by colour, no badge), prices on one baseline, at most 6 lines per plan, the headline states the pricing rule.
+- **Tells:** 4+ plans, "Most popular" or "Best value" badges, check icons on every line, a monthly/yearly toggle on a one-off price, "Simple, transparent pricing".
+- **Signature:** prices laid on the calendar or season when the page has dates; otherwise none.
+
+## About
+
+- **Hero recipe:** 2.
+- **Sections:** `chapter`, `people-row`, optional `timeline-rail`, `close-photo`.
+- **Targets:** one founder or origin quote with attribution directly under it, people with real names and roles, no stat strip or facts row.
+- **Tells:** a Mission/Vision/Values card row, an icon timeline, a "15+ years · 10k customers" strip, circle avatars with "Passionate about...".
+- **Signature:** the founder's quote with a hanging quote mark.
+
+## Article
+
+- **Hero recipe:** none.
+- **Targets:** title at most 2 lines, body 17-20px, lines 60-75 characters, images the column's width with captions, at most one pull quote.
+- **Tells:** a gradient banner, a tag cloud or related-posts sidebar, "In this article, we'll explore...".
+- **Signature:** title over a full-bleed opening photo, a drop cap, one pull quote, a reading progress bar.
+
+## Contact
+
+- **Hero recipe:** none.
+- **Sections:** `booking-form`, optional `visit-map`, `footer-visit`.
+- **Targets:** at most 5 fields with labels above, email and phone as plain text.
+- **Tells:** an "Email us / Call us / Visit us" 3-card grid, "Get in touch", 8-field forms, decorative maps.
+- **Signature:** an invitation to the real place with a pin on its photo, only when the page has an address people can visit; otherwise none.
+
+## Product detail
+
+- **Hero recipe:** none. No taste section ids.
+- **Targets:** gallery in the larger column, price beside the name, one buy button, specs always visible.
+- **Tells:** a badge pile on the photo, two buy buttons, "23 people are viewing this", specs in tabs.
+- **Signature:** real availability (stock, seats or berths left) shown as a small map or count, only when the page states it.
+
+## Login/register
+
+- **Hero recipe:** none. No taste section ids.
+- **Targets:** register at most 3 fields, login 2, at most 2 single-sign-on buttons above the form, one primary button, one link to the other form, password rules as one hint line.
+- **Tells:** "Welcome back! 👋", a centred card on a gradient blob, 4 social buttons.
+- **Signature:** the photo side states what the account is for (rotating captions only when the page lists more than one reason).
+
+## Signature rule
+
+One signature per page at most. It shows one true fact already on the page in an unexpected form. Never invent a fact, number or date. No true fact, no signature: the page stays tidy only, and the reply says so. Every signature needs a 390 layout and a reduced-motion state.

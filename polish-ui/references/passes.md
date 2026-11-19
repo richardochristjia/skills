@@ -62,4 +62,7 @@ Pick 2 or 3 for the page, the recipe's moments first, then from `<taste>/referen
 - Skip a kind the page has no place for. No nav dropdown means no rich nav component.
 - Never a shader or scene unless the page is tech, gaming or software.
 - Each honours `prefers-reduced-motion`.
+- Text is readable within 600 ms of load; one load animation per page.
+- Every hover moment has a tap, focus or scroll version: a hover preview becomes a menu sheet or a tap; hover zoom only under `@media (hover:hover)`, a swipe gallery otherwise.
+- `prefers-reduced-motion: reduce` shows the end state.
 - Check: covered by the finish gate (`<taste>/references/gate.md` lists the motion and performance checks).
