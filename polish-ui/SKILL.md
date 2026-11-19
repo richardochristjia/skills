@@ -35,7 +35,7 @@ Do this before any edit.
 
 ## 4. Work folder and before shots
 
-- `W="${TMPDIR:-/tmp}/polish-ui-<page-slug>-<timestamp>"`. Screenshots, the pass log and the sheet go here, never in the repo.
+- `W="${TMPDIR:-/tmp}/polish-ui-<page-slug>-<timestamp>"`. Screenshots, the pass log and the sheet go here, never in the repo (the Background step's candidate shots and preview page are the one exception, kept in git-excluded `.lavish/`).
 - Taste's own state folder (`.taste-skill/`) and `.lavish/` (Background step) go into `.git/info/exclude`. Never `.gitignore`, never a commit.
 - Shoot the page before any edit, at 1440 and 390:
   ```
