@@ -1,0 +1,3 @@
+interface:
+  display_name: "polish-ui"
+  short_description: "Unslop one existing web page, one pass at a time."

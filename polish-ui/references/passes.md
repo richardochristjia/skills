@@ -1,0 +1,65 @@
+# Passes
+
+One section per basic pass, in run order. Each has Look for (the tells), Change, Check and Taste refs. These point to taste's references and never copy them. `<page>` is the target, `<dir>` the taste profile folder.
+
+Where a check says "no FAIL", run `node <taste>/scripts/consistency.mjs <page> --widths 1440,390 --profile <dir> --quick` and read the ids named.
+
+## 1. Declutter
+
+- **Look for:** a badge or pill above the h1, a second call to action, extra nav items (Sign in next to the main button), decorative chips, an icon on every button.
+- **Change:** remove them. Keep one primary action.
+- **Check:** fewer elements in the screenshot; the consistency check shows no new FAIL.
+- **Taste refs:** `<taste>/references/layout-v4.md`.
+
+## 2. Spacing
+
+- **Look for:** gaps and paddings off taste's spacing scale, uneven rhythm between sections.
+- **Change:** put every gap on the system's scale.
+- **Check:** the spacing and rhythm ids show no FAIL.
+- **Taste refs:** `<taste>/references/system.md`, `<taste>/references/layout-v4.md`.
+
+## 3. Copy
+
+- **Look for:** long body copy, stock lines, slop words, a headline over three lines at 1440.
+- **Change:** one short headline, one or two sentences, one call to action label.
+- **Check:** `node <taste>/scripts/copy-lint.mjs <page>` shows no FAIL.
+- **Taste refs:** `<taste>/references/copy-tells.md`.
+
+## 4. Alignment
+
+- **Look for:** headline, text, call to action and image edges that do not line up with the nav and the frame.
+- **Change:** share one left edge and one container width.
+- **Check:** the edge and alignment ids show no FAIL.
+- **Taste refs:** `<taste>/references/layout-v4.md`.
+
+## 5. Font
+
+- **Look for:** the default AI faces, such as a Playfair Display hero or Inter everywhere.
+- **Change:** swap to a pairing from `<taste>/library/type.json` that fits the page's kind.
+- **Check:** the face is in `type.json`; the consistency check shows no FAIL.
+- **Taste refs:** `<taste>/library/type.json`, `<taste>/references/system.md`.
+
+## 6. Font size
+
+- **Look for:** sizes off the type scale, a hero larger than the scale's h1.
+- **Change:** move every size onto the scale.
+- **Check:** the type ids show no FAIL.
+- **Taste refs:** `<taste>/references/system.md`, `<taste>/library/type.json`.
+
+## 7. Imagery
+
+- **Look for:** a boxed or carded hero image, stock-looking pictures.
+- **Change:** go full-bleed or use a frame as `photos.md` describes. Text over a picture needs contrast.
+- **Check:** the consistency check shows no FAIL, contrast included.
+- **Taste refs:** `<taste>/references/photos.md`.
+
+## Moments
+
+Pick 2 or 3 for the page from `<taste>/references/moments.md` and `<taste>/references/motion.md`:
+
+- At most one of each kind: one rich component, one micro-interaction, one entrance (for example a nav dropdown, a button arrow shift, a hero reveal).
+- Minimum 2, maximum 3.
+- Skip a kind the page has no place for. No nav dropdown means no rich nav component.
+- Never a shader or scene unless the page is tech, gaming or software.
+- Each honours `prefers-reduced-motion`.
+- Check: `node <taste>/scripts/gate.mjs <page>` shows no motion or performance FAIL (`<taste>/references/gate.md`).
