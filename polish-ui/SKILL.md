@@ -29,7 +29,7 @@ Do this before any edit.
 
 ## 3. Clean tree and branch
 
-- `git status --porcelain` shows anything: print "Commit or stash your changes first; polish-ui resets failed passes." and stop. No edits, no branch.
+- `git status --porcelain` shows anything: print "Commit or stash your changes first; polish-ui commits each pass." and stop. No edits, no branch.
 - On the default branch: `git switch -c polish-ui/<page-slug>`. Otherwise stay on the current branch.
 - Note the start commit: `git rev-parse HEAD`.
 
@@ -49,7 +49,7 @@ Read [references/recipes.md](references/recipes.md) and pick one recipe by its p
 
 ## 4.5. Arm the gate
 
-Read the page's kind (software, gaming, tech, product, service or place) and its main action. Run `node <taste>/scripts/gate.mjs --start <page> --kind <kind> --category "<what is sold>" --primary "<main action>"`.
+Read the page's kind (software, gaming, tech, product, service or place) and its main action. Run `node <taste>/scripts/gate.mjs --start <page> --kind <kind> --category "<what is sold>" --primary "<main action>"`. Arming is not a gate run.
 
 ## 5. Basic passes, in this order
 
@@ -59,8 +59,7 @@ Read the page's kind (software, gaming, tech, product, service or place) and its
 2. Edit the page's source for that pass only. Keep routes, forms, data and behaviour.
 3. `git diff --quiet` and no new files: status `no change`, log it, next pass.
 4. Shoot once at 1440 into `$W/NN-<pass>-1440.png`. No taste check between passes.
-5. A `copy-cast-company` FAIL on the page's existing brand name is not a FAIL to fix: keep the name, waive it in `.taste-skill/waivers.json` (`{"check": "copy-cast-company", "target": "<the whole where the gate prints, e.g. copy x1: \"Lumen\">", "reason": "existing brand name of the page"}`), and say so in the reply.
-6. `git add -A` the files the pass changed, `git commit -m "style(polish-ui): <pass> <page-slug>"`. Status `changed`, log the short sha.
+5. `git add -A` the files the pass changed, `git commit -m "style(polish-ui): <pass> <page-slug>"`. Status `changed`, log the short sha.
 
 ## 6. Moments
 
@@ -68,7 +67,7 @@ Read `<taste>/references/moments.md` and `<taste>/references/motion.md`, then th
 
 ## 7. Finish gate
 
-Run `node <taste>/scripts/gate.mjs <page>` (it already runs the consistency check and copy-lint). Any FAIL: one fix round as its own commit, `style(polish-ui): gate fixes <page-slug>`, then run the gate once more. Never run `consistency.mjs` separately and never more than two gate runs. If a fix would undo the recipe's targets, the recipe wins. Shoot the final page at 1440 and 390. A FAIL that stays is reported with its id, never hidden or chased.
+Run `node <taste>/scripts/gate.mjs <page>` (it already runs the consistency check and copy-lint). Any FAIL: a `copy-cast-company` FAIL on the page's existing brand name is not fixed: keep the name, waive it in `.taste-skill/waivers.json` (`{"check": "copy-cast-company", "target": "<the whole where the gate prints, e.g. copy x1: \"Lumen\">", "reason": "existing brand name of the page"}`) and say so in the reply; any other FAIL gets one fix round as its own commit, `style(polish-ui): gate fixes <page-slug>`, then run the gate once more. Never run `consistency.mjs` separately and never more than two gate runs. If a fix would undo the recipe's targets, the recipe wins. Shoot the final page at 1440 and 390. A FAIL that stays is reported with its id, never hidden or chased.
 
 ## 8. Sheet
 

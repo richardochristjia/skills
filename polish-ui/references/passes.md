@@ -22,7 +22,7 @@ Targets come from the chosen recipe in `recipes.md`. Nothing is checked between 
 
 - **Look for:** long body copy, stock lines, slop words, a headline over the recipe's line or word limit at 1440.
 - **Change:** cut to the recipe's limits (for recipe 1: headline at most 3 lines and 8 words, body at most 20 words), read off the 1440 shot. One call to action label.
-- **Check:** `node <taste>/scripts/copy-lint.mjs <page>` shows no FAIL. A `copy-cast-company` FAIL on the page's existing brand name does not count: keep the name, waive it in `.taste-skill/waivers.json` with reason "existing brand name of the page" (SKILL.md section 5 step 5), and say so in the reply.
+- **Check:** the finish gate covers it (it runs copy-lint).
 - **Taste refs:** `<taste>/references/copy-tells.md`.
 
 ## 4. Alignment
@@ -62,4 +62,4 @@ Pick 2 or 3 for the page, the recipe's moments first, then from `<taste>/referen
 - Skip a kind the page has no place for. No nav dropdown means no rich nav component.
 - Never a shader or scene unless the page is tech, gaming or software.
 - Each honours `prefers-reduced-motion`.
-- Check: `node <taste>/scripts/gate.mjs <page>` shows no motion or performance FAIL (`<taste>/references/gate.md`).
+- Check: covered by the finish gate (`<taste>/references/gate.md` lists the motion and performance checks).
