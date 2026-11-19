@@ -1,6 +1,6 @@
 ---
 name: polish-ui
-description: Removes the AI-made look from one existing web page by fixing it in place, one pass at a time, with a commit and a screenshot per pass and a contact sheet at the end. A hero recipe is picked first, then seven fixed basic passes (declutter, spacing, copy, alignment, font, font size, imagery) aim at it, then two or three moments picked for the page. Use when a page looks AI-made, generic, templated or sloppy and needs cleaning up, not redesigning, or when the user says "polish", "unslop" or "clean up this page". App screens, native apps, new screens and new sections go to design-forge.
+description: Removes the AI-made look from one existing web page by fixing it in place, one pass at a time, with a commit and a screenshot per pass and a contact sheet at the end. A page type and recipe are picked first (with a palette check against the hero photo), then seven fixed basic passes (declutter, spacing, copy, alignment, font, font size, imagery) aim at it, then at most one signature move and two or three moments picked for the page. Use when a page looks AI-made, generic, templated or sloppy and needs cleaning up, not redesigning, or when the user says "polish", "unslop" or "clean up this page". App screens, native apps, new screens and new sections go to design-forge.
 ---
 
 <instructions>
@@ -43,9 +43,15 @@ Do this before any edit.
   node <taste>/scripts/shoot.mjs --url <url or file> --w 390 --h 844 --no-tiles --out $W/00-before-390.png --profile <dir>
   ```
 
+## 4.3. Page type and palette
+
+Read [references/recipes.md](references/recipes.md). Name the page type from its signals (page type signals list) and state it in one line with why.
+
+Run `node <polish-ui>/scripts/palette.mjs --shot $W/00-before-1440.png --ground <body's computed background hex> --rect x,y,w,h --json`, with the hero image's box as the rect. `clash: false` (or exit 2): keep the palette, no question. `clash: true`: unless the prompt says "keep the palette" or "use the suggested palette", ask once, before any edit: keep it, or switch the ground, borders and muted text to the suggestion (accent and brand colours stay). A switch is its own commit, `style(polish-ui): palette <page-slug>`, before Declutter.
+
 ## 4.4. Pick the recipe
 
-Read [references/recipes.md](references/recipes.md) and pick one recipe by its pick rule, looking at the before shots. State it in one line with why. Every pass reads its targets from that recipe.
+Pick the page recipe for the type, and its hero recipe by the hero pick rule (or the one the page recipe names; none means no hero recipe). State it in one line with why. Every pass reads its targets from them.
 
 ## 4.5. Arm the gate
 
@@ -65,6 +71,10 @@ Read the page's kind (software, gaming, tech, product, service or place) and its
 
 Read `<taste>/references/moments.md` and `<taste>/references/motion.md`, then the pick rules in `references/passes.md`. Pick 2 or 3, name each in one line with why it fits the page. The recipe's moments come first, then taste's. Each runs the pass loop above. Every moment honours `prefers-reduced-motion`.
 
+## 6.5. Signature
+
+After the 7 passes and before the moments: apply at most one signature from the page recipe, following the Signature rule in `references/recipes.md`, as its own commit `style(polish-ui): signature <page-slug>`. No true fact on the page, no signature.
+
 ## 7. Finish gate
 
 Run `node <taste>/scripts/gate.mjs <page>` (it already runs the consistency check and copy-lint). Any FAIL: a `copy-cast-company` FAIL on the page's existing brand name is not fixed: keep the name, waive it in `.taste-skill/waivers.json` (`{"check": "copy-cast-company", "target": "<the whole where the gate prints, e.g. copy x1: \"Lumen\">", "reason": "existing brand name of the page"}`) and say so in the reply; any other FAIL gets one fix round as its own commit, `style(polish-ui): gate fixes <page-slug>`, then run the gate once more. Never run `consistency.mjs` separately and never more than two gate runs. If a fix would undo the recipe's targets, the recipe wins. Shoot the final page at 1440 and 390. A FAIL that stays is reported with its id, never hidden or chased.
@@ -75,6 +85,6 @@ Write `$W/passes.json` (format in the header of `scripts/sheet.mjs`), then run `
 
 ## 9. Reply
 
-The chosen recipe and why, a table of the passes (status, commit), the moments chosen and why, the gate result, and the sheet path. No push, no pull request, no merge.
+The page type and why, the chosen recipe and why, the palette decision (kept, switched or no clash), the signature (or "none: no true fact"), a table of the passes (status, commit), the moments chosen and why, the gate result, and the sheet path. No push, no pull request, no merge.
 
 </instructions>
