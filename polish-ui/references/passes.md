@@ -22,7 +22,7 @@ Where a check says "no FAIL", run `node <taste>/scripts/consistency.mjs <page> -
 
 - **Look for:** long body copy, stock lines, slop words, a headline over three lines at 1440.
 - **Change:** one short headline, one or two sentences, one call to action label.
-- **Check:** `node <taste>/scripts/copy-lint.mjs <page>` shows no FAIL.
+- **Check:** `node <taste>/scripts/copy-lint.mjs <page>` shows no FAIL. A `copy-cast-company` FAIL on the page's existing brand name does not count: keep the name, waive it in `.taste-skill/waivers.json` with reason "existing brand name of the page" (SKILL.md section 5 step 5), and say so in the reply.
 - **Taste refs:** `<taste>/references/copy-tells.md`.
 
 ## 4. Alignment
