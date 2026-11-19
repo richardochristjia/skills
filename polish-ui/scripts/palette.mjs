@@ -90,7 +90,9 @@ let x0 = 0, y0 = 0, rw = w, rh = h;
 if (rectArg) {
   const r = rectArg.split(',').map(Number);
   if (r.length !== 4 || r.some((n) => !Number.isFinite(n))) fail(`bad --rect: ${rectArg}`);
-  [x0, y0, rw, rh] = r;
+  // getBoundingClientRect boxes are fractional; snap outward to whole pixels so indexes stay integers
+  x0 = Math.floor(r[0]); y0 = Math.floor(r[1]);
+  rw = Math.ceil(r[0] + r[2]) - x0; rh = Math.ceil(r[1] + r[3]) - y0;
   x0 = Math.max(0, x0); y0 = Math.max(0, y0);
   rw = Math.min(w - x0, rw); rh = Math.min(h - y0, rh);
   if (rw <= 0 || rh <= 0) fail('--rect is outside the image');
