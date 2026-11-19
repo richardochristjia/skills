@@ -35,6 +35,7 @@ State the mode in one line with the reason. Then read only that mode's file.
 | Tokens, colours or sizes everywhere, tidy the design system, export to Figma | system | [modes/system.md](modes/system.md) |
 | `*.xcodeproj`, `Package.swift`, `pubspec.yaml`, React Native (`app.json` and `react-native`), or the user names iOS or Android | native, with one mode above | [modes/native.md](modes/native.md) |
 
+- An existing web page that only needs its AI-made look removed, with no new screens or sections: hand over to **polish-ui** and stop.
 - "Improve the design system" with no other signal: ask one chat question. A) Clean up the code (system mode). B) Export to Figma (system mode, hand-off only). Recommend A.
 - **Page or app screen** is the first decision. Record it with the mode. A page also records taste's kind: software, gaming, tech, product, service or place.
 - **Mixed** (a page plus the app behind it): one Look for both.
