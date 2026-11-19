@@ -55,7 +55,7 @@ Read the page's kind (software, gaming, tech, product, service or place) and its
 2. Edit the page's source for that pass only. Keep routes, forms, data and behaviour.
 3. `git diff --quiet` and no new files: status `no change`, log it, next pass.
 4. Shoot at 1440 and 390 into `$W/NN-<pass>-{1440,390}.png`.
-5. Run the pass's check. A FAIL gets one fix attempt, then a re-shoot and re-check. Still a FAIL: `git reset --hard <last pass commit or start commit>`, `git clean -fd` for new files, status `skipped` with the first FAIL line as the reason, next pass.
+5. Run the pass's check. A FAIL gets one fix attempt, then a re-shoot and re-check. Still a FAIL: `git reset --hard <last pass commit or start commit>`, `git clean -fd` for new files, status `skipped` with the first FAIL line as the reason, next pass. A `copy-cast-company` FAIL on the page's existing brand name is not a FAIL to fix: keep the name, waive it in `.taste-skill/waivers.json` (`{"check": "copy-cast-company", "target": "<the whole where the gate prints, e.g. copy x1: \"Lumen\">", "reason": "existing brand name of the page"}`), and say so in the reply.
 6. Pass: `git add -A` the files the pass changed, `git commit -m "style(polish-ui): <pass> <page-slug>"`. Status `changed`, log the short sha.
 
 ## 6. Moments
