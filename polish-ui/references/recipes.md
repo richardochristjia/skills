@@ -7,7 +7,7 @@ polish-ui picks one recipe after the before shots and states it in one line with
 - A strong, large photo: recipe 1.
 - A photo that must keep its edges: recipe 2.
 - No real photo: recipe 3 or 5.
-- Software page: recipe 4.
+- Software page: recipe 4, even with a large photo.
 
 ## 1. Full-bleed photo
 
