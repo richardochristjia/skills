@@ -2,7 +2,7 @@
 
 Deck: [AI agents in Figma Slides](https://www.figma.com/slides/4Uu2945oj7lcKEFf10b8qM). The `.pptx` in this folder is the backup.
 
-**15 minutes: 13 minutes talk and demo, 2 minutes Q&A.** Times are elapsed from the start. Have the cover (“From chat to agents”) on screen before 0:00 while people join, then start the talk on slide 01. If you’re behind, trim the spoken customer and handover examples, not the demo or Q&A.
+**15 minutes: 13 minutes talk and demo, 2 minutes Q&A.** Times are elapsed from the start. Have the cover (“AI Agents Demonstration”) on screen before 0:00 while people join, then start the talk on slide 01. If you’re behind, trim the spoken customer and handover examples, not the demo or Q&A.
 
 ## 01 — AI agents · 0:00–1:30
 
@@ -62,7 +62,7 @@ Deck: [AI agents in Figma Slides](https://www.figma.com/slides/4Uu2945oj7lcKEFf1
 
 ## Figma Slides and rehearsal
 
-1. Present from the Figma file linked at the top. It has the cover plus slides 01–09 in order, with speaker notes from this handout on each slide. Open presenter view and check the cover, the full demo prompt on slide 08, and the speaker notes.
+1. Present from the Figma file linked at the top. It has the cover plus slides 01–09 in order, with speaker notes from this handout on each slide. Open presenter view and check the cover, the full demo prompt on slide 08, and the speaker notes. Slides 01–09 span 16 Figma slides because three of them build in steps: click through 4 steps on 01, 2 on 03 and 3 on 07 before moving to the next number.
 2. Backup: if the Figma file is unavailable, open the Figma file browser, choose **Import**, select `ai-agents.pptx`, then open the imported deck in Figma Slides. See [Figma’s PowerPoint import guide](https://help.figma.com/hc/en-us/articles/30601628883607-Import-PowerPoint-files-to-Figma-Slides). The `.pptx` has no cover slide and the older, lighter look; confirm all nine slides are in order and check the title, diagram, and full prompt for wrapping or clipping. Keep this handout beside the deck if import shifts or drops any notes.
 3. Pre-open the fictional demo terminal and `demo/fallback.png`. Rehearse switching from the deck to Pi, switching to the screenshot at 11:00 if needed, and returning for Q&A at 13:00. Finish at 15:00.
 4. After a dry run, ask a non-technical colleague when regular chat is enough and for one task they would give an agent.
